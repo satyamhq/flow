@@ -7,26 +7,44 @@ import { formatCurrency } from '@/lib/utils';
 import { PageHeader } from '@/components/ui/page-header';
 import { DataTable, Column } from '@/components/ui/data-table';
 import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
+import { EmptyState } from '@/components/ui/empty-state';
 
 interface ChannelRow {
   channel: string;
+  count: number;
   share: number;
-  newArr: number;
-  cac: number;
-  trend: string;
+  totalValue: number;
 }
 
 export default function DistributionPage() {
-  const { currentOrg } = useFlow();
+  const { currentOrg, leads, customers, setIsCreateOpen, setCreateType } = useFlow();
 
-  const channels: ChannelRow[] = [
-    { channel: 'Product-Led Growth (PLG)', share: 38, newArr: 5966000, cac: 180, trend: '+24%' },
-    { channel: 'Enterprise Sales-Led (SLG)', share: 34, newArr: 5338000, cac: 1450, trend: '+18%' },
-    { channel: 'High-Intent Developer Search', share: 14, newArr: 2198000, cac: 520, trend: '+12%' },
-    { channel: 'Executive Strategic Referrals', share: 9, newArr: 1413000, cac: 120, trend: '+35%' },
-    { channel: 'Open Source Community', share: 5, newArr: 785000, cac: 95, trend: '+40%' },
-  ];
+  // Aggregate channels from real leads and customers
+  const channelMap: Record<string, { count: number; totalValue: number }> = {};
+
+  leads.forEach((l) => {
+    const src = l.source || 'Direct Outreach';
+    if (!channelMap[src]) channelMap[src] = { count: 0, totalValue: 0 };
+    channelMap[src].count += 1;
+    channelMap[src].totalValue += l.value || 0;
+  });
+
+  customers.forEach((c) => {
+    const src = 'Direct / Enterprise';
+    if (!channelMap[src]) channelMap[src] = { count: 0, totalValue: 0 };
+    channelMap[src].count += 1;
+    channelMap[src].totalValue += c.arr || 0;
+  });
+
+  const totalItems = (leads.length + customers.length) || 1;
+  const channels: ChannelRow[] = Object.entries(channelMap).map(([channel, data]) => ({
+    channel,
+    count: data.count,
+    share: Math.round((data.count / totalItems) * 100),
+    totalValue: data.totalValue,
+  }));
+
+  const hasData = channels.length > 0;
 
   const columns: Column<ChannelRow>[] = [
     {
@@ -49,22 +67,16 @@ export default function DistributionPage() {
       ),
     },
     {
-      header: 'Attributed ARR',
-      accessorKey: 'newArr',
+      header: 'Attributed Pipeline / ARR',
+      accessorKey: 'totalValue',
       sortable: true,
-      cell: (c) => <span className="font-mono font-medium text-[#EDF2F7]">{formatCurrency(c.newArr)}</span>,
+      cell: (c) => <span className="font-mono font-medium text-[#EDF2F7]">{formatCurrency(c.totalValue)}</span>,
     },
     {
-      header: 'Channel CAC',
-      accessorKey: 'cac',
+      header: 'Records',
+      accessorKey: 'count',
       sortable: true,
-      cell: (c) => <span className="font-mono text-[#9AA0A6]">${c.cac}</span>,
-    },
-    {
-      header: 'Growth Trend',
-      accessorKey: 'trend',
-      sortable: true,
-      cell: (c) => <Badge variant="success">{c.trend}</Badge>,
+      cell: (c) => <span className="font-mono text-[#9AA0A6]">{c.count}</span>,
     },
   ];
 
@@ -72,21 +84,37 @@ export default function DistributionPage() {
     <div className="space-y-6">
       <PageHeader
         breadcrumbs={[
-          { label: 'Flow Console', href: '/app/org/acme' },
+          { label: currentOrg.name, href: `/app/org/${currentOrg.slug}/overview` },
           { label: 'Growth & Distribution', href: '#' },
           { label: 'Customer Channels' },
         ]}
         title="Customer Acquisition & Distribution"
-        description="Distribution engine attribution, cohort unit economics, and blended channel efficiency."
-        badge={<Badge variant="info">5 Active Channels</Badge>}
+        description="Distribution channel attribution computed from real sales pipeline and customer telemetry."
+        badge={
+          <Badge variant={hasData ? 'info' : 'neutral'}>
+            {channels.length} Active Channels
+          </Badge>
+        }
       />
 
-      <DataTable
-        data={channels}
-        columns={columns}
-        searchKey="channel"
-        searchPlaceholder="Filter channels..."
-      />
+      {!hasData ? (
+        <EmptyState
+          title="No customer channels yet"
+          description="Record sales leads or customer accounts to view acquisition channel attribution."
+          actionLabel="Create Lead"
+          onAction={() => {
+            setCreateType('lead');
+            setIsCreateOpen(true);
+          }}
+        />
+      ) : (
+        <DataTable
+          data={channels}
+          columns={columns}
+          searchKey="channel"
+          searchPlaceholder="Filter channels..."
+        />
+      )}
     </div>
   );
 }

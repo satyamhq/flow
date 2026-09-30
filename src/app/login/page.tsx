@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useFlow } from '@/context/flow-context';
-import { Building2, ArrowRight, ShieldCheck, Code2, Sparkles } from 'lucide-react';
+import { Building2, ArrowRight, ShieldCheck, Code2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -12,19 +12,44 @@ import { Input } from '@/components/ui/input';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { currentOrg } = useFlow();
+  const { currentOrg, signIn, signUp } = useFlow();
 
-  const [email, setEmail] = useState('satyam@acme.ai');
-  const [password, setPassword] = useState('••••••••••••');
-  const [remember, setRemember] = useState(true);
+  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    router.push(`/app/org/${currentOrg.slug}/overview`);
-  };
+    setErrorMsg('');
+    setSuccessMsg('');
+    setIsLoading(true);
 
-  const handleDemoLogin = () => {
-    router.push(`/app/org/acme/overview`);
+    try {
+      if (mode === 'signin') {
+        const res = await signIn(email, password);
+        if (res.error) {
+          setErrorMsg(res.error);
+        } else {
+          router.push(`/app/org/${currentOrg.slug}/overview`);
+        }
+      } else {
+        const res = await signUp(email, password, fullName);
+        if (res.error) {
+          setErrorMsg(res.error);
+        } else {
+          setSuccessMsg('Account registered successfully. You can now sign in or proceed to onboarding.');
+          setMode('signin');
+        }
+      }
+    } catch (err: any) {
+      setErrorMsg(err?.message || 'Authentication failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -34,113 +59,131 @@ export default function LoginPage() {
           <div className="w-8 h-8 rounded bg-[#1A73E8] flex items-center justify-center text-white shadow-sm font-bold text-base">
             F
           </div>
-          <span className="tracking-wider text-base font-semibold">FLOW</span>
+          <span className="tracking-wider text-base font-semibold">FLOW CONSOLE</span>
         </Link>
-        <h2 className="text-xl font-semibold text-[#EDF2F7] tracking-tight mt-2">Sign in to Flow Console</h2>
-        <p className="text-xs text-[#9AA0A6]">Authenticate with enterprise credentials or SSO</p>
+        <h2 className="text-xl font-semibold text-[#EDF2F7] tracking-tight mt-2">
+          {mode === 'signin' ? 'Sign in to your organization' : 'Create your Flow account'}
+        </h2>
+        <p className="text-xs text-[#9AA0A6]">
+          {mode === 'signin'
+            ? 'Authenticate using your verified Supabase credentials'
+            : 'Get started with an authoritative enterprise workspace'}
+        </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <Card className="border-[#202637]">
-          {/* Quick Demo Access banner */}
-          <div className="p-3.5 bg-[#161D2D]/60 border-b border-[#202637] flex items-center justify-between">
-            <div>
-              <span className="font-semibold text-xs text-[#8AB4F8] block">Instant Demo Access</span>
-              <span className="text-[11px] text-[#9AA0A6]">Preloaded with Acme AI ($15.7M ARR)</span>
-            </div>
-            <Button
-              size="sm"
-              variant="primary"
-              onClick={handleDemoLogin}
-              className="h-7 text-xs"
+          {/* Mode Switcher Tabs */}
+          <div className="flex border-b border-[#202637] text-xs">
+            <button
+              type="button"
+              onClick={() => {
+                setMode('signin');
+                setErrorMsg('');
+                setSuccessMsg('');
+              }}
+              className={`flex-1 py-3 text-center font-medium border-b-2 transition-colors cursor-pointer ${
+                mode === 'signin'
+                  ? 'border-[#1A73E8] text-[#8AB4F8] font-semibold'
+                  : 'border-transparent text-[#9AA0A6] hover:text-[#EDF2F7]'
+              }`}
             >
-              Enter Demo
-            </Button>
+              Sign In
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setMode('signup');
+                setErrorMsg('');
+                setSuccessMsg('');
+              }}
+              className={`flex-1 py-3 text-center font-medium border-b-2 transition-colors cursor-pointer ${
+                mode === 'signup'
+                  ? 'border-[#1A73E8] text-[#8AB4F8] font-semibold'
+                  : 'border-transparent text-[#9AA0A6] hover:text-[#EDF2F7]'
+              }`}
+            >
+              Register
+            </button>
           </div>
 
           <CardContent className="p-6 space-y-4">
+            {errorMsg && (
+              <div className="p-3 rounded bg-[#D93025]/15 border border-[#D93025]/40 text-xs text-[#EA4335] flex items-start space-x-2">
+                <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                <span>{errorMsg}</span>
+              </div>
+            )}
+
+            {successMsg && (
+              <div className="p-3 rounded bg-[#0D904F]/15 border border-[#0D904F]/40 text-xs text-[#81C995] flex items-start space-x-2">
+                <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                <span>{successMsg}</span>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-4">
+              {mode === 'signup' && (
+                <Input
+                  label="Full Name"
+                  type="text"
+                  required
+                  placeholder="e.g. Alex Mercer"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+              )}
+
               <Input
-                label="Work Email"
+                label="Corporate Email"
                 type="email"
                 required
+                placeholder="you@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
 
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-medium text-[#EDF2F7]">Password</label>
-                  <span className="text-[11px] text-[#8AB4F8] hover:underline cursor-pointer">Forgot password?</span>
-                </div>
-                <Input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-
-              <div className="flex items-center justify-between text-xs pt-1">
-                <label className="flex items-center space-x-2 text-[#9AA0A6] cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={remember}
-                    onChange={(e) => setRemember(e.target.checked)}
-                    className="rounded bg-[#161D2D] border-[#202637] text-[#1A73E8] focus:ring-0"
-                  />
-                  <span>Remember active session</span>
-                </label>
-              </div>
+              <Input
+                label="Password"
+                type="password"
+                required
+                placeholder="••••••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
 
               <Button
                 type="submit"
                 variant="primary"
-                className="w-full justify-center"
+                isLoading={isLoading}
+                className="w-full justify-center mt-2"
               >
-                <span>Continue to Console</span>
+                <span>{mode === 'signin' ? 'Sign In to Console' : 'Create Account'}</span>
                 <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
               </Button>
             </form>
-
-            <div className="relative pt-2">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-[#202637]" />
-              </div>
-              <div className="relative flex justify-center text-[10px] uppercase font-mono tracking-wider">
-                <span className="bg-[#111622] px-2 text-[#9AA0A6]">Or continue with</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 pt-1">
-              <Button
-                type="button"
-                variant="secondary"
-                size="sm"
-                onClick={handleDemoLogin}
-                className="justify-center"
-              >
-                Google SSO
-              </Button>
-
-              <Button
-                type="button"
-                variant="secondary"
-                size="sm"
-                onClick={handleDemoLogin}
-                className="justify-center"
-              >
-                <Code2 className="w-3.5 h-3.5 mr-1" />
-                GitHub
-              </Button>
-            </div>
           </CardContent>
 
           <CardFooter className="pt-0 pb-6 px-6 justify-center text-xs text-[#9AA0A6]">
-            Don&apos;t have an organization account?{' '}
-            <Link href="/onboarding" className="text-[#8AB4F8] hover:underline font-medium ml-1">
-              Create organization
-            </Link>
+            {mode === 'signin' ? (
+              <span>
+                Need to create a new organization?{' '}
+                <Link href="/onboarding" className="text-[#8AB4F8] hover:underline font-medium ml-1">
+                  Start onboarding
+                </Link>
+              </span>
+            ) : (
+              <span>
+                Already registered?{' '}
+                <button
+                  type="button"
+                  onClick={() => setMode('signin')}
+                  className="text-[#8AB4F8] hover:underline font-medium ml-1 cursor-pointer"
+                >
+                  Sign in instead
+                </button>
+              </span>
+            )}
           </CardFooter>
         </Card>
       </div>

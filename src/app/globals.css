@@ -6,7 +6,7 @@
      Structured for enterprise density, calm neutrals, and sharp hierarchy.
      ========================================================================== */
 
-  /* Neutral Surface System */
+  /* Neutral Surface System (Dark - Default) */
   --bg-app: #0B0E14;             /* Root canvas deep background */
   --surface-base: #111622;       /* Primary module/card background */
   --surface-elevated: #161D2D;   /* Hover, active cards, popovers, modals */
@@ -38,7 +38,7 @@
   --info-text: #8AB4F8;
 
   /* Typography / Text Tokens */
-  --text-primary: #EDF2F7;       /* 92% White for sharp headings & primary data */
+  --text-primary: #EDF2F7;       /* High-contrast headings & primary data */
   --text-secondary: #9AA0A6;     /* Google Cloud neutral secondary */
   --text-muted: #5F6368;         /* Subdued metadata & timestamps */
   --text-disabled: #3C4043;
@@ -54,6 +54,36 @@
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
   --shadow-md: 0 4px 12px 0 rgba(0, 0, 0, 0.45);
   --shadow-lg: 0 12px 32px 0 rgba(0, 0, 0, 0.65);
+}
+
+.light, [data-theme="light"] {
+  /* Google Cloud Console Light Theme Tokens */
+  --bg-app: #F8F9FA;
+  --surface-base: #FFFFFF;
+  --surface-elevated: #F1F3F4;
+  --surface-subtle: #E8EAED;
+  --surface-header: #FFFFFF;
+
+  --primary: #1A73E8;
+  --primary-hover: #174EA6;
+  --primary-active: #185ABC;
+  --primary-subtle: rgba(26, 115, 232, 0.08);
+  --primary-foreground: #FFFFFF;
+
+  --text-primary: #202124;
+  --text-secondary: #5F6368;
+  --text-muted: #80868B;
+  --text-disabled: #BDC1C6;
+  --text-link: #1A73E8;
+
+  --border: #DADCE0;
+  --border-subtle: #E8EAED;
+  --border-strong: #BDC1C6;
+  --border-focus: #1A73E8;
+
+  --shadow-sm: 0 1px 2px 0 rgba(60, 64, 67, 0.15);
+  --shadow-md: 0 4px 12px 0 rgba(60, 64, 67, 0.20);
+  --shadow-lg: 0 12px 32px 0 rgba(60, 64, 67, 0.25);
 }
 
 body {
@@ -77,6 +107,11 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #252D40;
   border-radius: 3px;
+}
+
+.light .custom-scrollbar::-webkit-scrollbar-thumb,
+[data-theme="light"] .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #DADCE0;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {

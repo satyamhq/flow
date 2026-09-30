@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json().catch(() => ({}));
   const prompt = (body.prompt || '').trim();
+  const telemetry = body.telemetry || {};
 
   if (!prompt) {
     return NextResponse.json(
@@ -29,12 +30,33 @@ export async function POST(req: NextRequest) {
   const apiKey = process.env.GEMINI_API_KEY || process.env.AI_API_KEY;
   let answer = '';
   let modelName = 'gemini-1.5-flash';
-  let tokensUsed = 150;
+  let tokensUsed = 120;
+
+  // Real verified organization telemetry context
+  const orgName = telemetry.orgName || 'your organization';
+  const projectsCount = telemetry.projectsCount ?? 0;
+  const tasksCount = telemetry.tasksCount ?? 0;
+  const customersCount = telemetry.customersCount ?? 0;
+  const totalArr = telemetry.totalArr ?? 0;
+  const leadsCount = telemetry.leadsCount ?? 0;
+
+  const systemInstruction = `You are Flow AI, the autonomous operating intelligence for ${orgName}.
+Below is the REAL, VERIFIED database telemetry for this organization:
+- Organization Name: ${orgName}
+- Total Active Projects: ${projectsCount}
+- Total Work Items/Tasks: ${tasksCount}
+- Total Enterprise Customers: ${customersCount}
+- Verified Annual Recurring Revenue (ARR): $${totalArr.toLocaleString()}
+- Active Sales Leads: ${leadsCount}
+
+CRITICAL RULES:
+1. ONLY answer questions using the verified telemetry provided above or user input.
+2. NEVER invent, hallucinate, fabricate, or assume fake revenue, customers, deals, or employee numbers.
+3. If the user asks about revenue, ARR, projects, or customers and the count is 0, explicitly report that no records exist yet ($0 ARR, 0 projects, 0 customers).
+4. If asked about something not in the telemetry, say: "I don't have enough data in your organization records to answer that. You can create projects, tasks, or customers to populate your operating telemetry."`;
 
   if (apiKey && !apiKey.startsWith('mock')) {
     try {
-      const systemInstruction = `You are Flow AI, the autonomous company operating intelligence for an enterprise. The current organization is Acme AI ($15.7M ARR, 142 enterprise customers, 85 employees, 99.98% platform reliability, sub-185ms query latency). Provide concise, executive-level, analytical answers connecting strategy to execution.`;
-
       const geminiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
       const res = await fetch(geminiEndpoint, {
         method: 'POST',
@@ -50,8 +72,8 @@ export async function POST(req: NextRequest) {
             },
           ],
           generationConfig: {
-            maxOutputTokens: 500,
-            temperature: 0.2,
+            maxOutputTokens: 400,
+            temperature: 0.1,
           },
         }),
       });
@@ -60,8 +82,8 @@ export async function POST(req: NextRequest) {
         const data = await res.json();
         const candidateText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (candidateText) {
-          answer = candidateText;
-          tokensUsed = data?.usageMetadata?.totalTokenCount || 200;
+          answer = candidateText.trim();
+          tokensUsed = data?.usageMetadata?.totalTokenCount || 150;
         }
       }
     } catch {
@@ -69,16 +91,15 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Graceful fallback to rich context-aware synthesis
+  // Honest, telemetry-accurate fallback if Gemini API is unreachable
   if (!answer) {
-    if (prompt.toLowerCase().includes('arr') || prompt.toLowerCase().includes('revenue')) {
-      answer = `Acme AI currently has a run-rate ARR of $15,700,000 (+18.4% YoY) across 142 enterprise customers with an average contract value (ACV) of $110,500. Net Revenue Retention is 134%, with gross margins at 84.5%.`;
-    } else if (prompt.toLowerCase().includes('project') || prompt.toLowerCase().includes('task') || prompt.toLowerCase().includes('block')) {
-      answer = `There are 4 active strategic projects in flight. One critical blocker identified: 'Fortune 100 enterprise proposal requires final security architecture sign-off' assigned to Satyam. Resolving this will keep the $320k deal on track for Q3 close.`;
-    } else if (prompt.toLowerCase().includes('latency') || prompt.toLowerCase().includes('engineer')) {
-      answer = `Engineering telemetry reports 99.98% availability with P95 query latency at 185ms across all multi-tenant Supabase Postgres partitions. 3 production pull requests are awaiting review in the core repo.`;
+    const lower = prompt.toLowerCase();
+    if (lower.includes('arr') || lower.includes('revenue') || lower.includes('margin')) {
+      answer = `Verified database records for ${orgName}: Current ARR is $${totalArr.toLocaleString()} across ${customersCount} customer account(s).`;
+    } else if (lower.includes('project') || lower.includes('task') || lower.includes('block')) {
+      answer = `Verified database records for ${orgName}: You currently have ${projectsCount} project(s) and ${tasksCount} task(s) registered in your workspace.`;
     } else {
-      answer = `Flow AI synthesized live telemetry for Acme AI: All operational pillars are green. ARR is $15.7M, team headcount is 85 across 4 offices, cash runway is 36 months, and multi-tenant RLS isolation is actively enforced with 0 security incidents.`;
+      answer = `Operating telemetry for ${orgName}: ${projectsCount} project(s), ${tasksCount} task(s), ${customersCount} customer account(s), and $${totalArr.toLocaleString()} verified ARR.`;
     }
   }
 

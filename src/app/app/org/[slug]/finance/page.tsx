@@ -1,41 +1,54 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useFlow } from '@/context/flow-context';
-import { CreditCard, DollarSign, Activity, TrendingUp, ShieldCheck } from 'lucide-react';
+import { CreditCard, DollarSign, Activity, TrendingUp, ShieldCheck, Plus } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
 import { PageHeader } from '@/components/ui/page-header';
 import { MetricCard } from '@/components/ui/metric-card';
 import { DataTable, Column } from '@/components/ui/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-
-interface FinanceTransaction {
-  customer: string;
-  amount: number;
-  type: string;
-  status: 'succeeded' | 'pending' | 'failed';
-  date: string;
-}
+import { EmptyState } from '@/components/ui/empty-state';
 
 export default function FinancePage() {
-  const { currentOrg } = useFlow();
+  const { currentOrg, transactions, createTransaction, customers, integrations } = useFlow();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formAccount, setFormAccount] = useState('');
+  const [formAmount, setFormAmount] = useState(10000);
+  const [formType, setFormType] = useState('Enterprise Subscription');
 
-  const transactions: FinanceTransaction[] = [
-    { customer: 'Stripe Payments', amount: 620000, type: 'Annual Enterprise Subscription', status: 'succeeded', date: 'Yesterday' },
-    { customer: 'Vercel Inc.', amount: 480000, type: 'Annual Strategic Renewal', status: 'succeeded', date: '3 days ago' },
-    { customer: 'Supabase Pte. Ltd.', amount: 350000, type: 'Multi-Region Enterprise Tier', status: 'succeeded', date: '1 week ago' },
-    { customer: 'AWS / Cloudflare Edge Network', amount: -28400, type: 'Global Edge Transit Infrastructure', status: 'succeeded', date: '2 weeks ago' },
-  ];
+  const stripeIntegration = integrations.find((i) => i.id === 'stripe');
+  const isStripeConnected = stripeIntegration?.status === 'connected';
 
-  const columns: Column<FinanceTransaction>[] = [
+  const totalArr = customers.reduce((sum, c) => sum + (c.arr || 0), 0);
+  const mrr = Math.round(totalArr / 12);
+  const totalNetRevenue = transactions.reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+
+  const handleCreateTx = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formAccount.trim()) return;
+
+    createTransaction({
+      customer: formAccount.trim(),
+      amount: Number(formAmount),
+      type: formType,
+      date: 'Today',
+      status: 'succeeded',
+    });
+
+    setFormAccount('');
+    setIsModalOpen(false);
+  };
+
+  const columns: Column<any>[] = [
     {
       header: 'Account / Description',
       accessorKey: 'customer',
       sortable: true,
       cell: (t) => (
         <div>
-          <span className="font-semibold text-[#EDF2F7]">{t.customer}</span>
+          <span className="font-semibold text-[#EDF2F7]">{t.customer || t.description}</span>
           <span className="block text-[11px] text-[#9AA0A6]">{t.type}</span>
         </div>
       ),
@@ -45,13 +58,13 @@ export default function FinancePage() {
       accessorKey: 'status',
       sortable: true,
       cell: (t) => (
-        <Badge variant={t.status === 'succeeded' ? 'success' : 'warning'} dot>
+        <Badge variant={t.status === 'succeeded' || t.status === 'cleared' ? 'success' : 'warning'} dot>
           {t.status}
         </Badge>
       ),
     },
     {
-      header: 'Net Amount',
+      header: 'Amount',
       accessorKey: 'amount',
       sortable: true,
       cell: (t) => (
@@ -80,54 +93,115 @@ export default function FinancePage() {
           { label: 'Finance' },
         ]}
         title="Financial Operating Dashboard"
-        description="Stripe billing synchronization, GAAP recurring revenue, cash burn, and unit margins."
+        description="Verified revenue telemetry, ledger transactions, and recurring subscription accounting."
         badge={
-          <Badge variant="info" dot>
-            Stripe Synchronized
+          <Badge variant={isStripeConnected ? 'success' : 'neutral'} dot>
+            Stripe: {isStripeConnected ? 'Connected' : 'Disconnected'}
           </Badge>
+        }
+        actions={
+          <Button variant="primary" size="sm" onClick={() => setIsModalOpen(true)}>
+            <Plus className="w-4 h-4 mr-1.5" />
+            Record Transaction
+          </Button>
         }
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
-          title="Annual Recurring Revenue"
-          value="$15.70M"
-          delta="+18.4% YoY"
+          title="Customer ARR"
+          value={formatCurrency(totalArr)}
+          delta={`${customers.length} Accounts`}
           deltaType="positive"
-          subText="MRR: $1.31M • NRR: 134%"
+          subText={`MRR: ${formatCurrency(mrr)}`}
           icon={DollarSign}
         />
         <MetricCard
-          title="Net Monthly Burn"
-          value="$210,000"
-          subText="36 Months Total Runway"
+          title="Ledger Volume"
+          value={formatCurrency(totalNetRevenue)}
+          subText={`${transactions.length} Total transactions`}
           icon={Activity}
         />
         <MetricCard
-          title="Gross Margin"
-          value="84.5%"
-          delta="Top Quartile"
+          title="Active Customers"
+          value={customers.length}
+          delta={customers.length > 0 ? 'Verified' : 'None'}
           deltaType="positive"
-          subText="Infrastructure Optimized"
-          icon={TrendingUp}
+          subText="Enterprise contracts in database"
+          icon={ShieldCheck}
         />
         <MetricCard
-          title="Net Retention (NRR)"
-          value="134%"
-          delta="Expansion Accel"
-          deltaType="positive"
-          subText="142 Active Enterprise Accounts"
-          icon={ShieldCheck}
+          title="Billing Connector"
+          value={isStripeConnected ? 'Active' : 'Offline'}
+          subText={isStripeConnected ? 'Stripe webhook sync live' : 'No webhook connected'}
+          icon={CreditCard}
         />
       </div>
 
-      <DataTable
-        data={transactions}
-        columns={columns}
-        keyExtractor={(t: any, idx: number) => `tx_${t.customer}_${t.date}_${idx}`}
-        searchableKey="customer"
-        searchPlaceholder="Filter transactions by account name..."
-      />
+      {isModalOpen && (
+        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
+          <h3 className="text-xs font-semibold text-[#EDF2F7]">Record General Ledger Transaction</h3>
+          <form onSubmit={handleCreateTx} className="space-y-3">
+            <div>
+              <label className="text-[11px] text-[#9AA0A6] block mb-1">Account or Customer Name</label>
+              <input
+                type="text"
+                required
+                value={formAccount}
+                onChange={(e) => setFormAccount(e.target.value)}
+                placeholder="e.g. Acme Enterprise Renewal"
+                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-[11px] text-[#9AA0A6] block mb-1">Amount ($)</label>
+                <input
+                  type="number"
+                  value={formAmount}
+                  onChange={(e) => setFormAmount(Number(e.target.value))}
+                  className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                />
+              </div>
+              <div>
+                <label className="text-[11px] text-[#9AA0A6] block mb-1">Category / Type</label>
+                <input
+                  type="text"
+                  value={formType}
+                  onChange={(e) => setFormType(e.target.value)}
+                  className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end space-x-2 pt-2">
+              <Button type="button" variant="secondary" size="sm" onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" variant="primary" size="sm">
+                Add Transaction
+              </Button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {transactions.length === 0 ? (
+        <EmptyState
+          icon={CreditCard}
+          title="No transactions recorded"
+          description="Record a financial invoice, customer payment, or infrastructure expense to populate your ledger."
+          actionLabel="Record Transaction"
+          onAction={() => setIsModalOpen(true)}
+        />
+      ) : (
+        <DataTable
+          data={transactions}
+          columns={columns}
+          keyExtractor={(t: any, idx: number) => `tx_${t.id || idx}`}
+          searchableKey="customer"
+          searchPlaceholder="Filter transactions by account name..."
+        />
+      )}
     </div>
   );
 }

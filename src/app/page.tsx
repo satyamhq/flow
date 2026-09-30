@@ -83,10 +83,10 @@ export default function LandingPage() {
             </Link>
 
             <Link
-              href="/app/org/acme/overview"
+              href="/login"
               className="w-full sm:w-auto px-6 py-2.5 rounded bg-[#111622] hover:bg-[#161D2D] border border-[#202637] text-[#EDF2F7] text-xs font-semibold transition-all flex items-center justify-center space-x-2"
             >
-              <span>Explore Demo (Acme AI)</span>
+              <span>Sign In to Console</span>
             </Link>
           </div>
         </section>
@@ -94,7 +94,7 @@ export default function LandingPage() {
         {/* Product UI Demonstration Box */}
         <section className="max-w-6xl mx-auto px-6 pb-20">
           <div className="rounded-lg border border-[#202637] bg-[#111622] shadow-2xl overflow-hidden">
-            {/* Fake OS Shell Header */}
+            {/* Enterprise OS Shell Header */}
             <div className="h-10 bg-[#0E131F] px-4 flex items-center justify-between border-b border-[#202637] text-xs">
               <div className="flex items-center space-x-3">
                 <div className="flex space-x-1.5">
@@ -102,10 +102,10 @@ export default function LandingPage() {
                   <div className="w-2.5 h-2.5 rounded-full bg-[#E37400]/70" />
                   <div className="w-2.5 h-2.5 rounded-full bg-[#0D904F]/70" />
                 </div>
-                <span className="font-mono text-[#9AA0A6] text-[11px]">console.flow.com/org/acme/overview</span>
+                <span className="font-mono text-[#9AA0A6] text-[11px]">console.flow.com/app/org/overview</span>
               </div>
               <span className="text-[10px] font-mono text-[#8AB4F8] bg-[#161D2D] px-2 py-0.5 rounded border border-[#202637]">
-                P95: 185ms • 99.98% SLA
+                Supabase Postgres • Multi-Tenant
               </span>
             </div>
 
@@ -113,31 +113,31 @@ export default function LandingPage() {
             <div className="p-4 sm:p-6 space-y-4 bg-[#0B0E14]">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-semibold text-white">Acme AI — Unified Company Operations</h3>
+                  <h3 className="text-sm font-semibold text-white">Flow — Company Operating System Console</h3>
                   <span className="text-[11px] text-[#9AA0A6]">Observe → Understand → Decide → Execute → Measure</span>
                 </div>
-                <Badge variant="success">94% Health Index</Badge>
+                <Badge variant="success">Architecture Verified</Badge>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="p-3.5 rounded bg-[#111622] border border-[#202637]">
-                  <span className="text-[10px] uppercase font-mono text-[#9AA0A6]">Run-Rate ARR</span>
-                  <div className="text-xl font-bold text-white mt-1 font-mono">$15,700,000</div>
-                  <span className="text-[10px] text-[#81C995] font-semibold">+18.4% Outperformance</span>
+                  <span className="text-[10px] uppercase font-mono text-[#9AA0A6]">Data Integrity</span>
+                  <div className="text-sm font-bold text-white mt-1 font-mono">Real Supabase Database</div>
+                  <span className="text-[10px] text-[#81C995] font-semibold">Zero Fake Metrics</span>
                 </div>
 
                 <div className="p-3.5 rounded bg-[#111622] border border-[#202637]">
-                  <span className="text-[10px] uppercase font-mono text-[#9AA0A6]">Net Retention Rate</span>
-                  <div className="text-xl font-bold text-white mt-1 font-mono">134%</div>
-                  <span className="text-[10px] text-[#8AB4F8] font-semibold">142 Enterprise Accounts</span>
+                  <span className="text-[10px] uppercase font-mono text-[#9AA0A6]">Tenant Isolation</span>
+                  <div className="text-sm font-bold text-white mt-1 font-mono">Row Level Security</div>
+                  <span className="text-[10px] text-[#8AB4F8] font-semibold">Strict Tenant Partitioning</span>
                 </div>
 
                 <div className="p-3.5 rounded bg-[#111622] border border-[#202637]">
                   <span className="text-[10px] uppercase font-mono text-[#9AA0A6]">Autonomous Flow AI</span>
                   <div className="text-xs text-[#EDF2F7] mt-1 font-medium line-clamp-2">
-                    &ldquo;Enterprise ACV expanded to $242k following the SOC-2 audit rollout.&rdquo;
+                    &ldquo;Verified telemetry ingestion with strict zero-hallucination guardrails.&rdquo;
                   </div>
-                  <span className="text-[10px] text-[#8AB4F8] font-mono">98% Confidence</span>
+                  <span className="text-[10px] text-[#8AB4F8] font-mono">Gemini 1.5 Flash</span>
                 </div>
               </div>
             </div>

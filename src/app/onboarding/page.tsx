@@ -17,15 +17,15 @@ export default function OnboardingPage() {
   const totalSteps = 10;
 
   // Onboarding state
-  const [orgName, setOrgName] = useState('Nexus Cloud');
-  const [website, setWebsite] = useState('https://nexuscloud.io');
-  const [description, setDescription] = useState('Global autonomous cloud computing infrastructure and low-latency APIs.');
-  const [industry, setIndustry] = useState('Cloud Infrastructure');
-  const [stage, setStage] = useState('Growth');
-  const [teamSize, setTeamSize] = useState('25-50');
-  const [role, setRole] = useState('Founder & CEO');
-  const [goals, setGoals] = useState<string[]>(['Scale ARR to $10M', 'Accelerate Engineering Velocity', 'Unify Company Operations']);
-  const [teamInvites, setTeamInvites] = useState('cto@nexuscloud.io, vp.sales@nexuscloud.io');
+  const [orgName, setOrgName] = useState('');
+  const [website, setWebsite] = useState('');
+  const [description, setDescription] = useState('');
+  const [industry, setIndustry] = useState('');
+  const [stage, setStage] = useState('Startup');
+  const [teamSize, setTeamSize] = useState('1-10');
+  const [role, setRole] = useState('Founder');
+  const [goals, setGoals] = useState<string[]>([]);
+  const [teamInvites, setTeamInvites] = useState('');
   const [workspaceConfig, setWorkspaceConfig] = useState('Enterprise Multi-Department (Engineering, Sales, Finance, AI)');
 
   const stages = ['Idea', 'Pre-launch', 'Startup', 'Growth', 'Scale-up', 'Enterprise'];
@@ -34,7 +34,7 @@ export default function OnboardingPage() {
     'Product', 'Engineering', 'Marketing', 'Sales', 'Finance', 'Operations', 'HR', 'Designer', 'Other'
   ];
   const goalOptions = [
-    'Scale ARR to $10M',
+    'Scale ARR',
     'Accelerate Engineering Velocity',
     'Unify Company Operations',
     'Improve Gross Margins & Runway',
@@ -48,19 +48,18 @@ export default function OnboardingPage() {
     );
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (step < totalSteps) {
       setStep(step + 1);
     } else {
-      createOrganization({
-        name: orgName,
-        industry,
-        stage: stage as any,
-        teamSize,
-        description,
+      const created = await createOrganization({
+        name: orgName.trim() || 'My Organization',
+        industry: industry.trim() || 'Technology',
+        stage: (stage as any) || 'Startup',
+        teamSize: teamSize || '1-10',
+        description: description.trim(),
       });
-      const slug = orgName.toLowerCase().replace(/\s+/g, '-');
-      router.push(`/app/org/${slug}/overview`);
+      router.push(`/app/org/${created.slug}/overview`);
     }
   };
 

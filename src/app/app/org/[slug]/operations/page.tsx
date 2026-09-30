@@ -1,14 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFlow } from '@/context/flow-context';
 import { Cpu, ShieldCheck, FileCheck, CheckCircle2, AlertCircle, Plus } from 'lucide-react';
 import { PageHeader } from '@/components/ui/page-header';
 import { DataTable, Column } from '@/components/ui/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { EmptyState } from '@/components/ui/empty-state';
 
 interface SOPRow {
+  id: string;
   title: string;
   dept: string;
   verified: string;
@@ -16,14 +18,46 @@ interface SOPRow {
 }
 
 export default function OperationsPage() {
-  const { currentOrg } = useFlow();
+  const { currentOrg, currentUser } = useFlow();
+  const [sops, setSops] = useState<SOPRow[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formTitle, setFormTitle] = useState('');
+  const [formDept, setFormDept] = useState(currentUser.department || 'Operations');
 
-  const sops: SOPRow[] = [
-    { title: 'SOP-01: Zero-Downtime Multi-Region Database Failover', dept: 'Infrastructure', verified: 'Sep 24, 2026', status: 'verified' },
-    { title: 'SOP-02: Enterprise Customer Security Incident Response Protocol', dept: 'Security & Legal', verified: 'Sep 15, 2026', status: 'verified' },
-    { title: 'SOP-03: SOC-2 Continuous Evidence Ingestion & Review', dept: 'Compliance', verified: 'Sep 28, 2026', status: 'verified' },
-    { title: 'SOP-04: High-Value Vendor Procurement & SLA Assessment', dept: 'Finance & Ops', verified: 'Aug 30, 2026', status: 'verified' },
-  ];
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(`flow_tenant_${currentOrg.id}_sops`);
+      if (stored) {
+        setSops(JSON.parse(stored));
+      } else {
+        setSops([]);
+      }
+    } catch {
+      setSops([]);
+    }
+  }, [currentOrg.id]);
+
+  const handleCreateSop = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formTitle.trim()) return;
+
+    const newSop: SOPRow = {
+      id: `sop_${Date.now()}`,
+      title: formTitle.trim(),
+      dept: formDept.trim() || 'Operations',
+      verified: 'Today',
+      status: 'active',
+    };
+
+    const updated = [newSop, ...sops];
+    setSops(updated);
+    try {
+      localStorage.setItem(`flow_tenant_${currentOrg.id}_sops`, JSON.stringify(updated));
+    } catch {}
+
+    setFormTitle('');
+    setIsModalOpen(false);
+  };
 
   const columns: Column<SOPRow>[] = [
     {
@@ -44,13 +78,13 @@ export default function OperationsPage() {
       cell: (sop) => <Badge variant="neutral">{sop.dept}</Badge>,
     },
     {
-      header: 'Last Audited',
+      header: 'Last Verified',
       accessorKey: 'verified',
       sortable: true,
       cell: (sop) => <span className="font-mono text-xs text-[#9AA0A6]">{sop.verified}</span>,
     },
     {
-      header: 'Compliance Status',
+      header: 'Status',
       accessorKey: 'status',
       sortable: true,
       cell: (sop) => <Badge variant="success">{sop.status}</Badge>,
@@ -61,27 +95,77 @@ export default function OperationsPage() {
     <div className="space-y-6">
       <PageHeader
         breadcrumbs={[
-          { label: 'Flow Console', href: '/app/org/acme' },
+          { label: currentOrg.name, href: `/app/org/${currentOrg.slug}/overview` },
           { label: 'Operations & Execution', href: '#' },
-          { label: 'Operations Center' },
+          { label: 'Standard Operating Procedures' },
         ]}
-        title="Operations & SOP Center"
-        description="Standard operating procedures, vendor procurement, compliance audits, and internal operations."
-        badge={<Badge variant="info">SOC-2 Type II Validated</Badge>}
+        title="Operations & Execution Governance"
+        description="Standard operating procedures, governance checklists, and verified audit protocols."
+        badge={
+          <Badge variant={sops.length > 0 ? 'success' : 'neutral'}>
+            {sops.length} Registered SOP{sops.length === 1 ? '' : 's'}
+          </Badge>
+        }
         actions={
-          <Button variant="primary" size="sm">
+          <Button variant="primary" size="sm" onClick={() => setIsModalOpen(true)}>
             <Plus className="w-4 h-4 mr-1.5" />
-            New SOP Document
+            Add SOP
           </Button>
         }
       />
 
-      <DataTable
-        data={sops}
-        columns={columns}
-        searchKey="title"
-        searchPlaceholder="Filter SOPs..."
-      />
+      {isModalOpen && (
+        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
+          <h3 className="text-xs font-semibold text-[#EDF2F7]">Register Standard Operating Procedure</h3>
+          <form onSubmit={handleCreateSop} className="space-y-3">
+            <div>
+              <label className="text-[11px] text-[#9AA0A6] block mb-1">SOP Title</label>
+              <input
+                type="text"
+                required
+                value={formTitle}
+                onChange={(e) => setFormTitle(e.target.value)}
+                placeholder="e.g. SOP-01: Zero-Downtime Database Failover"
+                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+              />
+            </div>
+            <div>
+              <label className="text-[11px] text-[#9AA0A6] block mb-1">Department</label>
+              <input
+                type="text"
+                value={formDept}
+                onChange={(e) => setFormDept(e.target.value)}
+                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+              />
+            </div>
+            <div className="flex justify-end space-x-2 pt-2">
+              <Button type="button" variant="secondary" size="sm" onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" variant="primary" size="sm">
+                Save SOP
+              </Button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {sops.length === 0 ? (
+        <EmptyState
+          icon={FileCheck}
+          title="No operational SOPs registered"
+          description="Publish standard operating procedures to maintain compliance and reliability across teams."
+          actionLabel="Add SOP"
+          onAction={() => setIsModalOpen(true)}
+        />
+      ) : (
+        <DataTable
+          data={sops}
+          columns={columns}
+          searchKey="title"
+          searchPlaceholder="Filter SOPs by title..."
+        />
+      )}
     </div>
   );
 }
