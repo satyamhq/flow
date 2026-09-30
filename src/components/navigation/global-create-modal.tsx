@@ -73,16 +73,16 @@ export function GlobalCreateModal() {
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
       onClick={() => setIsCreateOpen(false)}
     >
       <div
-        className="w-full max-w-lg bg-[#111622] border border-[#202637] rounded-lg shadow-2xl overflow-hidden animate-in fade-in"
+        className="w-full max-w-lg bg-[var(--surface-base)] border border-[var(--border)] rounded-lg shadow-2xl overflow-hidden animate-in fade-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-[#202637] bg-[#0E131F]">
-          <span className="text-xs font-semibold text-[#EDF2F7] uppercase tracking-wider">
+        <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--border)] bg-[var(--surface-header)]">
+          <span className="text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wider">
             Create Resource
           </span>
           <Button variant="ghost" size="sm" onClick={() => setIsCreateOpen(false)}>
@@ -91,7 +91,7 @@ export function GlobalCreateModal() {
         </div>
 
         {/* Type Tabs */}
-        <div className="flex border-b border-[#181E2E] bg-[#0B0E14] px-5 pt-2.5 space-x-4">
+        <div className="flex border-b border-[var(--border-subtle)] bg-[var(--surface-header)] px-5 pt-2.5 space-x-4">
           {types.map((t) => {
             const Icon = t.icon;
             const isActive = createType === t.id;
@@ -99,10 +99,10 @@ export function GlobalCreateModal() {
               <button
                 key={t.id}
                 onClick={() => setCreateType(t.id)}
-                className={`flex items-center space-x-1.5 pb-2 text-xs font-medium border-b-2 transition-colors cursor-pointer ${
+                className={`flex items-center space-x-2 pb-2 text-xs font-medium border-b-2 transition-colors cursor-pointer ${
                   isActive
-                    ? 'border-[#1A73E8] text-[#8AB4F8] font-semibold'
-                    : 'border-transparent text-[#9AA0A6] hover:text-[#EDF2F7]'
+                    ? 'border-[#1A73E8] text-[#1A73E8] font-semibold'
+                    : 'border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -113,81 +113,97 @@ export function GlobalCreateModal() {
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-5 space-y-3.5">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4">
           <Input
-            label={createType === 'lead' ? 'Contact Name' : `${createType.charAt(0).toUpperCase() + createType.slice(1)} Title`}
-            required
+            label={createType === 'project' ? 'Project Name' : createType === 'customer' ? 'Customer Account' : createType === 'lead' ? 'Contact Name' : 'Task Title'}
+            placeholder={createType === 'project' ? 'e.g. Q4 SOC2 Type II Certification' : createType === 'customer' ? 'e.g. Stripe Inc.' : 'e.g. Implement OIDC token exchange'}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder={`e.g. ${createType === 'task' ? 'Implement OAuth2 PKCE callback' : createType === 'project' ? 'V2 Platform Migration' : 'Acme Corporation'}`}
+            required
+            autoFocus
           />
 
           {createType === 'lead' && (
             <Input
-              label="Company Name"
-              required
+              label="Company / Organization"
+              placeholder="e.g. Microsoft Azure"
               value={company}
               onChange={(e) => setCompany(e.target.value)}
-              placeholder="Enterprise prospect organization"
             />
           )}
 
           {(createType === 'customer' || createType === 'lead') && (
             <Input
-              label="Contract Value (ARR $)"
+              label={createType === 'customer' ? 'Annual Recurring Revenue (ARR)' : 'Estimated Deal Size ($)'}
               type="number"
               value={value}
               onChange={(e) => setValue(Number(e.target.value))}
             />
           )}
 
-          {createType === 'task' && (
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1">
-                <label className="block text-xs font-medium text-[#EDF2F7]">Project</label>
-                <select
-                  value={selectedProjectId}
-                  onChange={(e) => setSelectedProjectId(e.target.value)}
-                  className="w-full bg-[#111622] border border-[#202637] rounded-md px-3 py-1.5 text-xs text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
-                >
-                  {projects.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+          {createType === 'task' && projects.length > 0 && (
+            <div className="space-y-1 text-left w-full">
+              <label className="block text-xs font-medium text-[var(--text-primary)]">
+                Associated Project
+              </label>
+              <select
+                value={selectedProjectId}
+                onChange={(e) => setSelectedProjectId(e.target.value)}
+                className="w-full bg-[var(--surface-base)] border border-[var(--border)] rounded-md px-3 py-1.5 text-xs text-[var(--text-primary)] transition-colors focus:outline-none focus:border-[#1A73E8]"
+              >
+                {projects.map((p) => (
+                  <option key={p.id} value={p.id} className="bg-[var(--surface-base)] text-[var(--text-primary)]">
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
-              <div className="space-y-1">
-                <label className="block text-xs font-medium text-[#EDF2F7]">Priority</label>
-                <select
-                  value={priority}
-                  onChange={(e) => setPriority(e.target.value as any)}
-                  className="w-full bg-[#111622] border border-[#202637] rounded-md px-3 py-1.5 text-xs text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
-                >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                  <option value="urgent">Urgent</option>
-                </select>
+          {(createType === 'task' || createType === 'project') && (
+            <div className="space-y-1 text-left w-full">
+              <label className="block text-xs font-medium text-[var(--text-primary)]">
+                Priority Tier
+              </label>
+              <div className="grid grid-cols-4 gap-2">
+                {(['low', 'medium', 'high', 'urgent'] as const).map((p) => (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setPriority(p)}
+                    className={`py-1.5 text-xs font-mono capitalize rounded border transition-colors cursor-pointer ${
+                      priority === p
+                        ? 'bg-[var(--primary-subtle)] border-[#1A73E8] text-[#1A73E8] font-bold'
+                        : 'border-[var(--border)] text-[var(--text-secondary)] hover:bg-[var(--surface-elevated)]'
+                    }`}
+                  >
+                    {p}
+                  </button>
+                ))}
               </div>
             </div>
           )}
 
           <Textarea
-            label="Description (optional)"
-            rows={2}
+            label="Description & Context"
+            placeholder="Add scope details, blockers, or acceptance criteria..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Operational context, deliverables, or specifications..."
+            rows={3}
           />
 
-          <div className="flex items-center justify-end space-x-2 pt-3 border-t border-[#181E2E]">
-            <Button variant="secondary" size="sm" type="button" onClick={() => setIsCreateOpen(false)}>
+          {/* Footer Actions */}
+          <div className="flex items-center justify-end space-x-2 pt-2 border-t border-[var(--border-subtle)]">
+            <Button
+              type="button"
+              variant="secondary"
+              size="md"
+              onClick={() => setIsCreateOpen(false)}
+            >
               Cancel
             </Button>
-            <Button variant="primary" size="sm" type="submit">
-              Create {createType}
+            <Button type="submit" variant="primary" size="md">
+              Create Resource
             </Button>
           </div>
         </form>

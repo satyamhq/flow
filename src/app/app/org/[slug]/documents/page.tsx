@@ -65,26 +65,26 @@ export default function DocumentsPage() {
       />
 
       {isModalOpen && (
-        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
-          <h3 className="text-xs font-semibold text-[#EDF2F7]">Create RFC or Knowledge Document</h3>
+        <div className="p-4 rounded-lg bg-[var(--surface-base)] border border-[var(--border)] space-y-3 max-w-lg">
+          <h3 className="text-xs font-semibold text-[var(--text-primary)]">Create RFC or Knowledge Document</h3>
           <form onSubmit={handleCreateDoc} className="space-y-3">
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Document Title</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Document Title</label>
               <input
                 type="text"
                 required
                 value={docTitle}
                 onChange={(e) => setDocTitle(e.target.value)}
                 placeholder="e.g. RFC-01: Multi-Region Architecture"
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Category</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Category</label>
               <select
                 value={docCategory}
                 onChange={(e) => setDocCategory(e.target.value)}
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               >
                 <option value="Architecture">Architecture</option>
                 <option value="Strategy">Strategy</option>
@@ -94,13 +94,13 @@ export default function DocumentsPage() {
               </select>
             </div>
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Summary / Brief</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Summary / Brief</label>
               <textarea
                 value={docSnippet}
                 onChange={(e) => setDocSnippet(e.target.value)}
                 rows={3}
                 placeholder="Overview of this document..."
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div className="flex justify-end space-x-2 pt-2">
@@ -140,7 +140,7 @@ export default function DocumentsPage() {
             <Card key={d.id} className="hover:border-[#8AB4F8]/40 transition-colors cursor-pointer group">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <Badge variant="neutral">{d.category}</Badge>
-                <span className="text-[11px] text-[#9AA0A6] font-mono">{d.updated}</span>
+                <span className="text-[11px] text-[var(--text-secondary)] font-mono">{d.updated}</span>
               </CardHeader>
 
               <CardContent className="space-y-3">
@@ -148,15 +148,15 @@ export default function DocumentsPage() {
                   {d.title}
                 </CardTitle>
 
-                <p className="text-xs text-[#9AA0A6] line-clamp-2 leading-relaxed">
+                <p className="text-xs text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
                   {d.snippet || 'No description provided.'}
                 </p>
 
-                <div className="pt-3 border-t border-[#202637] flex items-center justify-between text-[11px] text-[#9AA0A6]">
+                <div className="pt-3 border-t border-[var(--border)] flex items-center justify-between text-[11px] text-[var(--text-secondary)]">
                   <span>Author: {d.author || currentUser.fullName}</span>
                   <div className="flex space-x-1.5">
                     {(d.tags || []).map((tag: string) => (
-                      <span key={tag} className="font-mono text-[9px] bg-[#161D2D] text-[#8AB4F8] px-1.5 py-0.5 rounded border border-[#202637]">
+                      <span key={tag} className="font-mono text-[9px] bg-[var(--surface-elevated)] text-[#8AB4F8] px-1.5 py-0.5 rounded border border-[var(--border)]">
                         #{tag}
                       </span>
                     ))}

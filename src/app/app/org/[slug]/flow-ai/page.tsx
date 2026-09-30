@@ -103,11 +103,11 @@ export default function FlowAIPage() {
               className={`max-w-2xl p-4 rounded-md shadow-sm space-y-1.5 ${
                 m.sender === 'user'
                   ? 'bg-[#1A73E8] text-white rounded-br-none'
-                  : 'bg-[#111622] border border-[#202637] text-[#EDF2F7] rounded-bl-none'
+                  : 'bg-[var(--surface-base)] border border-[var(--border)] text-[var(--text-primary)] rounded-bl-none'
               }`}
             >
               <div className="whitespace-pre-line leading-relaxed font-sans">{m.content}</div>
-              <span className={`block text-[10px] font-mono ${m.sender === 'user' ? 'text-blue-200' : 'text-[#9AA0A6]'}`}>
+              <span className={`block text-[10px] font-mono ${m.sender === 'user' ? 'text-blue-200' : 'text-[var(--text-secondary)]'}`}>
                 {m.timestamp}
               </span>
             </div>
@@ -128,7 +128,7 @@ export default function FlowAIPage() {
           <button
             key={idx}
             onClick={() => handleSend(qp)}
-            className="text-[11px] px-3 py-1.5 rounded bg-[#111622] border border-[#202637] hover:border-[#8AB4F8]/50 text-[#9AA0A6] hover:text-[#EDF2F7] transition-colors cursor-pointer"
+            className="text-[11px] px-3 py-1.5 rounded bg-[var(--surface-base)] border border-[var(--border)] hover:border-[#8AB4F8]/50 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
           >
             {qp}
           </button>
@@ -141,14 +141,14 @@ export default function FlowAIPage() {
           e.preventDefault();
           handleSend();
         }}
-        className="flex items-center space-x-2 bg-[#111622] border border-[#202637] rounded-md p-2 focus-within:border-[#1A73E8] transition-colors"
+        className="flex items-center space-x-2 bg-[var(--surface-base)] border border-[var(--border)] rounded-md p-2 focus-within:border-[#1A73E8] transition-colors"
       >
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask Flow AI about revenue, engineering blockers, strategy, or customers..."
-          className="flex-1 bg-transparent text-xs text-[#EDF2F7] placeholder-[#5F6368] px-3 py-1.5 focus:outline-none"
+          className="flex-1 bg-transparent text-xs text-[var(--text-primary)] placeholder-[#5F6368] px-3 py-1.5 focus:outline-none"
         />
         <Button
           type="submit"

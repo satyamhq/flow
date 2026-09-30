@@ -46,23 +46,23 @@ export default function GoalsPage() {
                 <CardTitle className="text-sm font-semibold">{g.title}</CardTitle>
                 <Badge variant="neutral">{g.timeframe}</Badge>
               </div>
-              <span className="text-xs text-[#9AA0A6] font-mono">Target Date: {g.targetDate}</span>
+              <span className="text-xs text-[var(--text-secondary)] font-mono">Target Date: {g.targetDate}</span>
             </CardHeader>
 
             <CardContent className="space-y-4">
-              <p className="text-xs text-[#9AA0A6]">{g.description}</p>
+              <p className="text-xs text-[var(--text-secondary)]">{g.description}</p>
 
               {/* Key Results */}
-              <div className="space-y-2 pt-3 border-t border-[#202637]">
-                <span className="text-[11px] font-semibold text-[#9AA0A6] uppercase tracking-wider block">
+              <div className="space-y-2 pt-3 border-t border-[var(--border)]">
+                <span className="text-[11px] font-semibold text-[var(--text-secondary)] uppercase tracking-wider block">
                   Key Results & Metrics
                 </span>
                 {g.keyResults.map((kr) => (
                   <div
                     key={kr.id}
-                    className="p-3 rounded bg-[#0E131F] border border-[#202637] flex items-center justify-between text-xs"
+                    className="p-3 rounded bg-[var(--surface-header)] border border-[var(--border)] flex items-center justify-between text-xs"
                   >
-                    <span className="text-[#EDF2F7] font-medium">{kr.title}</span>
+                    <span className="text-[var(--text-primary)] font-medium">{kr.title}</span>
                     <div className="flex items-center space-x-3">
                       <span className="font-mono text-[#8AB4F8] font-semibold">
                         {kr.currentValue} / {kr.targetValue} {kr.unit}

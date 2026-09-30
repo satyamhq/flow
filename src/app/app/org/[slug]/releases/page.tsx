@@ -84,27 +84,27 @@ export default function ReleasesPage() {
       />
 
       {isModalOpen && (
-        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
-          <h3 className="text-xs font-semibold text-[#EDF2F7]">Publish Release Version</h3>
+        <div className="p-4 rounded-lg bg-[var(--surface-base)] border border-[var(--border)] space-y-3 max-w-lg">
+          <h3 className="text-xs font-semibold text-[var(--text-primary)]">Publish Release Version</h3>
           <form onSubmit={handleCreateRelease} className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[11px] text-[#9AA0A6] block mb-1">Version Tag</label>
+                <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Version Tag</label>
                 <input
                   type="text"
                   required
                   value={formVersion}
                   onChange={(e) => setFormVersion(e.target.value)}
                   placeholder="v1.0.0"
-                  className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                  className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
                 />
               </div>
               <div>
-                <label className="text-[11px] text-[#9AA0A6] block mb-1">Status</label>
+                <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Status</label>
                 <select
                   value={formStatus}
                   onChange={(e) => setFormStatus(e.target.value as any)}
-                  className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                  className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
                 >
                   <option value="shipped">Shipped</option>
                   <option value="scheduled">Scheduled</option>
@@ -112,14 +112,14 @@ export default function ReleasesPage() {
               </div>
             </div>
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Release Highlights / Changelog</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Release Highlights / Changelog</label>
               <input
                 type="text"
                 required
                 value={formTitle}
                 onChange={(e) => setFormTitle(e.target.value)}
                 placeholder="e.g. Production launch of enterprise API v1"
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div className="flex justify-end space-x-2 pt-2">
@@ -153,10 +153,10 @@ export default function ReleasesPage() {
                   </div>
                   <div>
                     <div className="flex items-center space-x-2">
-                      <span className="font-mono font-bold text-[#EDF2F7] text-sm">{r.version}</span>
-                      <span className="font-medium text-[#EDF2F7]">{r.title}</span>
+                      <span className="font-mono font-bold text-[var(--text-primary)] text-sm">{r.version}</span>
+                      <span className="font-medium text-[var(--text-primary)]">{r.title}</span>
                     </div>
-                    <span className="text-[11px] text-[#9AA0A6] font-mono">Released: {r.date}</span>
+                    <span className="text-[11px] text-[var(--text-secondary)] font-mono">Released: {r.date}</span>
                   </div>
                 </div>
                 <Badge variant={r.status === 'shipped' ? 'success' : 'info'}>

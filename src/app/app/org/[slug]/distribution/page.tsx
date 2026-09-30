@@ -51,7 +51,7 @@ export default function DistributionPage() {
       header: 'Acquisition Channel',
       accessorKey: 'channel',
       sortable: true,
-      cell: (c) => <span className="font-semibold text-[#EDF2F7]">{c.channel}</span>,
+      cell: (c) => <span className="font-semibold text-[var(--text-primary)]">{c.channel}</span>,
     },
     {
       header: 'Volume Share',
@@ -59,8 +59,8 @@ export default function DistributionPage() {
       sortable: true,
       cell: (c) => (
         <div className="flex items-center space-x-2">
-          <span className="font-mono text-[#EDF2F7] text-xs">{c.share}%</span>
-          <div className="w-16 h-1.5 bg-[#161D2D] rounded-full overflow-hidden">
+          <span className="font-mono text-[var(--text-primary)] text-xs">{c.share}%</span>
+          <div className="w-16 h-1.5 bg-[var(--surface-elevated)] rounded-full overflow-hidden">
             <div className="h-full bg-[#1A73E8] rounded-full" style={{ width: `${c.share}%` }} />
           </div>
         </div>
@@ -70,13 +70,13 @@ export default function DistributionPage() {
       header: 'Attributed Pipeline / ARR',
       accessorKey: 'totalValue',
       sortable: true,
-      cell: (c) => <span className="font-mono font-medium text-[#EDF2F7]">{formatCurrency(c.totalValue)}</span>,
+      cell: (c) => <span className="font-mono font-medium text-[var(--text-primary)]">{formatCurrency(c.totalValue)}</span>,
     },
     {
       header: 'Records',
       accessorKey: 'count',
       sortable: true,
-      cell: (c) => <span className="font-mono text-[#9AA0A6]">{c.count}</span>,
+      cell: (c) => <span className="font-mono text-[var(--text-secondary)]">{c.count}</span>,
     },
   ];
 

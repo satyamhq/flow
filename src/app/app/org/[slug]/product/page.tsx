@@ -83,26 +83,26 @@ export default function ProductPage() {
       />
 
       {isModalOpen && (
-        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
-          <h3 className="text-xs font-semibold text-[#EDF2F7]">Register New Product</h3>
+        <div className="p-4 rounded-lg bg-[var(--surface-base)] border border-[var(--border)] space-y-3 max-w-lg">
+          <h3 className="text-xs font-semibold text-[var(--text-primary)]">Register New Product</h3>
           <form onSubmit={handleCreateProduct} className="space-y-3">
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Product Name</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Product Name</label>
               <input
                 type="text"
                 required
                 value={formName}
                 onChange={(e) => setFormName(e.target.value)}
                 placeholder="e.g. Nexus Core Engine"
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Lifecycle Stage</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Lifecycle Stage</label>
               <select
                 value={formStage}
                 onChange={(e) => setFormStage(e.target.value)}
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               >
                 <option value="Concept">Concept</option>
                 <option value="Alpha">Alpha</option>
@@ -111,13 +111,13 @@ export default function ProductPage() {
               </select>
             </div>
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Description</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Description</label>
               <textarea
                 value={formDesc}
                 onChange={(e) => setFormDesc(e.target.value)}
                 rows={2}
                 placeholder="Brief description of product capabilities..."
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div className="flex justify-end space-x-2 pt-2">
@@ -151,7 +151,7 @@ export default function ProductPage() {
                 </Badge>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-xs text-[#9AA0A6] leading-relaxed">{p.desc}</p>
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{p.desc}</p>
               </CardContent>
             </Card>
           ))}

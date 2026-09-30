@@ -48,8 +48,8 @@ export default function FinancePage() {
       sortable: true,
       cell: (t) => (
         <div>
-          <span className="font-semibold text-[#EDF2F7]">{t.customer || t.description}</span>
-          <span className="block text-[11px] text-[#9AA0A6]">{t.type}</span>
+          <span className="font-semibold text-[var(--text-primary)]">{t.customer || t.description}</span>
+          <span className="block text-[11px] text-[var(--text-secondary)]">{t.type}</span>
         </div>
       ),
     },
@@ -70,7 +70,7 @@ export default function FinancePage() {
       cell: (t) => (
         <span
           className={`font-mono font-semibold text-xs ${
-            t.amount > 0 ? 'text-[#34A853]' : 'text-[#EDF2F7]'
+            t.amount > 0 ? 'text-[#34A853]' : 'text-[var(--text-primary)]'
           }`}
         >
           {t.amount > 0 ? `+${formatCurrency(t.amount)}` : formatCurrency(t.amount)}
@@ -81,12 +81,12 @@ export default function FinancePage() {
       header: 'Date',
       accessorKey: 'date',
       sortable: true,
-      cell: (t) => <span className="font-mono text-xs text-[#9AA0A6]">{t.date}</span>,
+      cell: (t) => <span className="font-mono text-xs text-[var(--text-secondary)]">{t.date}</span>,
     },
   ];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6">
       <PageHeader
         breadcrumbs={[
           { label: currentOrg.name, href: `/app/org/${currentOrg.slug}/overview` },
@@ -139,37 +139,37 @@ export default function FinancePage() {
       </div>
 
       {isModalOpen && (
-        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
-          <h3 className="text-xs font-semibold text-[#EDF2F7]">Record General Ledger Transaction</h3>
+        <div className="p-4 rounded-lg bg-[var(--surface-base)] border border-[var(--border)] space-y-3 max-w-lg">
+          <h3 className="text-xs font-semibold text-[var(--text-primary)]">Record General Ledger Transaction</h3>
           <form onSubmit={handleCreateTx} className="space-y-3">
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Account or Customer Name</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Account or Customer Name</label>
               <input
                 type="text"
                 required
                 value={formAccount}
                 onChange={(e) => setFormAccount(e.target.value)}
                 placeholder="e.g. Acme Enterprise Renewal"
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[11px] text-[#9AA0A6] block mb-1">Amount ($)</label>
+                <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Amount ($)</label>
                 <input
                   type="number"
                   value={formAmount}
                   onChange={(e) => setFormAmount(Number(e.target.value))}
-                  className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                  className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
                 />
               </div>
               <div>
-                <label className="text-[11px] text-[#9AA0A6] block mb-1">Category / Type</label>
+                <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Category / Type</label>
                 <input
                   type="text"
                   value={formType}
                   onChange={(e) => setFormType(e.target.value)}
-                  className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                  className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
                 />
               </div>
             </div>

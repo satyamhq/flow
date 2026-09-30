@@ -24,7 +24,7 @@ export default function SalesPage() {
     .reduce((sum, l) => sum + (l.value * l.probability) / 100, 0);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6">
       <PageHeader
         breadcrumbs={[
           { label: currentOrg.name, href: `/app/org/${currentOrg.slug}/overview` },
@@ -78,13 +78,13 @@ export default function SalesPage() {
           const stageValue = stageLeads.reduce((sum, l) => sum + l.value, 0);
 
           return (
-            <div key={stage} className="bg-[#111622] border border-[#202637] rounded-lg p-3 min-w-[210px] space-y-3">
-              <div className="pb-2 border-b border-[#181E2E] flex items-center justify-between">
+            <div key={stage} className="bg-[var(--surface-base)] border border-[var(--border)] rounded-lg p-3 min-w-[210px] space-y-3">
+              <div className="pb-2 border-b border-[var(--border-subtle)] flex items-center justify-between">
                 <div>
-                  <span className="text-xs font-semibold text-[#EDF2F7] uppercase tracking-wider capitalize">
+                  <span className="text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wider capitalize">
                     {stage}
                   </span>
-                  <span className="block text-[10px] font-mono text-[#9AA0A6]">
+                  <span className="block text-[10px] font-mono text-[var(--text-secondary)]">
                     {formatCurrency(stageValue)}
                   </span>
                 </div>
@@ -95,20 +95,20 @@ export default function SalesPage() {
                 {stageLeads.map((lead) => (
                   <div
                     key={lead.id}
-                    className="p-3 rounded bg-[#161D2D] border border-[#202637] hover:border-[#1A73E8]/40 transition-colors space-y-2"
+                    className="p-3 rounded bg-[var(--surface-elevated)] border border-[var(--border)] hover:border-[#1A73E8]/40 transition-colors space-y-2"
                   >
                     <div>
-                      <span className="text-xs font-semibold text-[#EDF2F7]">{lead.company}</span>
-                      <span className="block text-[11px] text-[#9AA0A6]">{lead.name}</span>
+                      <span className="text-xs font-semibold text-[var(--text-primary)]">{lead.company}</span>
+                      <span className="block text-[11px] text-[var(--text-secondary)]">{lead.name}</span>
                     </div>
 
                     <div className="flex items-center justify-between text-xs font-mono">
                       <span className="font-bold text-[#8AB4F8]">{formatCurrency(lead.value)}</span>
-                      <span className="text-[10px] text-[#9AA0A6]">{lead.probability}% prob</span>
+                      <span className="text-[10px] text-[var(--text-secondary)]">{lead.probability}% prob</span>
                     </div>
 
-                    <div className="pt-1.5 border-t border-[#181E2E] text-[10px] text-[#9AA0A6]">
-                      <span className="text-[#5F6368] font-medium">Next:</span> {lead.nextAction}
+                    <div className="pt-1.5 border-t border-[var(--border-subtle)] text-[10px] text-[var(--text-secondary)]">
+                      <span className="text-[var(--text-muted)] font-medium">Next:</span> {lead.nextAction}
                     </div>
                   </div>
                 ))}

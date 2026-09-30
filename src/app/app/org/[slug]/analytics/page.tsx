@@ -79,7 +79,7 @@ export default function AnalyticsPage() {
               {metricType === 'projects' && 'Active Strategic Projects by Execution State'}
               {metricType === 'revenue' && 'Direct Customer ARR Allocation by Account Tier'}
             </CardTitle>
-            <span className="text-[11px] text-[#9AA0A6] font-mono">Aggregated directly from verified organization records</span>
+            <span className="text-[11px] text-[var(--text-secondary)] font-mono">Aggregated directly from verified organization records</span>
           </div>
 
           <Badge variant={hasData ? 'info' : 'neutral'}>
@@ -112,12 +112,12 @@ export default function AnalyticsPage() {
                 const heightPct = Math.round((item.count / max) * 100);
                 return (
                   <div key={idx} className="flex-1 flex flex-col items-center gap-2 h-full justify-end max-w-[120px]">
-                    <span className="text-[11px] font-mono text-[#EDF2F7] font-semibold">{item.count}</span>
+                    <span className="text-[11px] font-mono text-[var(--text-primary)] font-semibold">{item.count}</span>
                     <div
                       className={`w-full ${item.color} rounded-t transition-all duration-300 min-h-[4px]`}
                       style={{ height: `${Math.max(heightPct, 4)}%` }}
                     />
-                    <span className="text-[11px] text-[#9AA0A6] font-medium text-center">{item.label}</span>
+                    <span className="text-[11px] text-[var(--text-secondary)] font-medium text-center">{item.label}</span>
                   </div>
                 );
               })}
@@ -131,12 +131,12 @@ export default function AnalyticsPage() {
                 const heightPct = Math.round((item.count / max) * 100);
                 return (
                   <div key={idx} className="flex-1 flex flex-col items-center gap-2 h-full justify-end max-w-[140px]">
-                    <span className="text-[11px] font-mono text-[#EDF2F7] font-semibold">{item.count}</span>
+                    <span className="text-[11px] font-mono text-[var(--text-primary)] font-semibold">{item.count}</span>
                     <div
                       className={`w-full ${item.color} rounded-t transition-all duration-300 min-h-[4px]`}
                       style={{ height: `${Math.max(heightPct, 4)}%` }}
                     />
-                    <span className="text-[11px] text-[#9AA0A6] font-medium text-center">{item.label}</span>
+                    <span className="text-[11px] text-[var(--text-secondary)] font-medium text-center">{item.label}</span>
                   </div>
                 );
               })}
@@ -151,14 +151,14 @@ export default function AnalyticsPage() {
                 const heightPct = Math.round((item.val / max) * 100);
                 return (
                   <div key={idx} className="flex-1 flex flex-col items-center gap-2 h-full justify-end max-w-[120px]">
-                    <span className="text-[10px] font-mono text-[#EDF2F7] font-semibold truncate">
+                    <span className="text-[10px] font-mono text-[var(--text-primary)] font-semibold truncate">
                       {formatCurrency(item.val)}
                     </span>
                     <div
                       className={`w-full ${item.color} rounded-t transition-all duration-300 min-h-[4px]`}
                       style={{ height: `${Math.max(heightPct, 4)}%` }}
                     />
-                    <span className="text-[11px] text-[#9AA0A6] font-medium text-center">{item.label}</span>
+                    <span className="text-[11px] text-[var(--text-secondary)] font-medium text-center">{item.label}</span>
                   </div>
                 );
               })}

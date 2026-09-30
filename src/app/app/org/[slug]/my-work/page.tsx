@@ -42,7 +42,7 @@ export default function MyWorkPage() {
         description="Unified personal workspace for assigned tasks, active projects, review queues, and AI-prioritized actions."
         badge={<Badge variant="info">Assigned to You</Badge>}
         actions={
-          <div className="flex items-center space-x-2 bg-[#111622] border border-[#202637] rounded-md p-1">
+          <div className="flex items-center space-x-2 bg-[var(--surface-base)] border border-[var(--border)] rounded-md p-1">
             <Button
               size="sm"
               variant={filter === 'all' ? 'primary' : 'ghost'}
@@ -81,7 +81,7 @@ export default function MyWorkPage() {
                 <CheckSquare className="w-4 h-4 text-[#8AB4F8]" />
                 <span>Assigned Tasks Queue</span>
               </CardTitle>
-              <span className="text-xs text-[#9AA0A6] font-mono">
+              <span className="text-xs text-[var(--text-secondary)] font-mono">
                 {filteredTasks.length} items
               </span>
             </CardHeader>
@@ -92,11 +92,11 @@ export default function MyWorkPage() {
                   description="All your assigned items are cleared or in another status tab."
                 />
               ) : (
-                <div className="divide-y divide-[#202637]">
+                <div className="divide-y divide-[var(--border)]">
                   {filteredTasks.map((t) => (
                     <div
                       key={t.id}
-                      className="py-3.5 first:pt-0 last:pb-0 flex items-start justify-between hover:bg-[#161D2D]/40 px-2 rounded-md transition-colors"
+                      className="py-3.5 first:pt-0 last:pb-0 flex items-start justify-between hover:bg-[var(--surface-elevated)]/40 px-2 rounded-md transition-colors"
                     >
                       <div className="flex items-start space-x-3.5">
                         <button
@@ -112,12 +112,12 @@ export default function MyWorkPage() {
                         <div>
                           <span
                             className={`text-xs font-medium block ${
-                              t.status === 'done' ? 'line-through text-[#5F6368]' : 'text-[#EDF2F7]'
+                              t.status === 'done' ? 'line-through text-[var(--text-muted)]' : 'text-[var(--text-primary)]'
                             }`}
                           >
                             {t.title}
                           </span>
-                          <div className="flex items-center space-x-2 mt-1 text-[11px] text-[#9AA0A6]">
+                          <div className="flex items-center space-x-2 mt-1 text-[11px] text-[var(--text-secondary)]">
                             <span className="text-[#8AB4F8]">{t.projectName}</span>
                             <span>•</span>
                             <span className="font-mono">Due {t.dueDate}</span>
@@ -148,7 +148,7 @@ export default function MyWorkPage() {
 
         {/* Right Col: AI Daily Recommendation & Today's Schedule */}
         <div className="space-y-6">
-          <Card className="border-[#1A73E8]/40 bg-[#161D2D]/60">
+          <Card className="border-[#1A73E8]/40 bg-[var(--surface-elevated)]/60">
             <CardHeader className="pb-2">
               <CardTitle className="text-xs font-semibold text-[#8AB4F8] flex items-center space-x-2">
                 <Sparkles className="w-4 h-4" />
@@ -156,11 +156,11 @@ export default function MyWorkPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-xs text-[#EDF2F7] leading-relaxed">
+              <p className="text-xs text-[var(--text-primary)] leading-relaxed">
                 You have 1 blocked critical item for the Fortune 100 enterprise proposal. Unblocking this will keep the $320k deal on track for Q3 close.
               </p>
-              <div className="mt-3 pt-3 border-t border-[#202637] flex items-center justify-between">
-                <span className="text-[11px] text-[#9AA0A6]">Impact Score: High</span>
+              <div className="mt-3 pt-3 border-t border-[var(--border)] flex items-center justify-between">
+                <span className="text-[11px] text-[var(--text-secondary)]">Impact Score: High</span>
                 <Button size="sm" variant="ghost" className="text-xs text-[#8AB4F8] p-0 h-auto">
                   Resolve item →
                 </Button>
@@ -170,26 +170,26 @@ export default function MyWorkPage() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-xs font-semibold text-[#EDF2F7] flex items-center space-x-2">
+              <CardTitle className="text-xs font-semibold text-[var(--text-primary)] flex items-center space-x-2">
                 <Calendar className="w-4 h-4 text-[#8AB4F8]" />
                 <span>Today&apos;s Schedule</span>
               </CardTitle>
-              <span className="text-[11px] text-[#9AA0A6] font-mono">2 events</span>
+              <span className="text-[11px] text-[var(--text-secondary)] font-mono">2 events</span>
             </CardHeader>
             <CardContent className="space-y-2.5">
-              <div className="p-3 rounded bg-[#0E131F] border border-[#202637]">
-                <div className="flex justify-between font-medium text-xs text-[#EDF2F7]">
+              <div className="p-3 rounded bg-[var(--surface-header)] border border-[var(--border)]">
+                <div className="flex justify-between font-medium text-xs text-[var(--text-primary)]">
                   <span>Executive Engineering Sync</span>
-                  <span className="text-[#9AA0A6] font-mono text-[11px]">10:00 AM</span>
+                  <span className="text-[var(--text-secondary)] font-mono text-[11px]">10:00 AM</span>
                 </div>
-                <p className="text-[11px] text-[#9AA0A6] mt-1">Review V2 Platform Architecture & P95 latency</p>
+                <p className="text-[11px] text-[var(--text-secondary)] mt-1">Review V2 Platform Architecture & P95 latency</p>
               </div>
-              <div className="p-3 rounded bg-[#0E131F] border border-[#202637]">
-                <div className="flex justify-between font-medium text-xs text-[#EDF2F7]">
+              <div className="p-3 rounded bg-[var(--surface-header)] border border-[var(--border)]">
+                <div className="flex justify-between font-medium text-xs text-[var(--text-primary)]">
                   <span>Fortune 100 Architecture Review</span>
-                  <span className="text-[#9AA0A6] font-mono text-[11px]">2:30 PM</span>
+                  <span className="text-[var(--text-secondary)] font-mono text-[11px]">2:30 PM</span>
                 </div>
-                <p className="text-[11px] text-[#9AA0A6] mt-1">Enterprise security and multi-tenant isolation demo</p>
+                <p className="text-[11px] text-[var(--text-secondary)] mt-1">Enterprise security and multi-tenant isolation demo</p>
               </div>
             </CardContent>
           </Card>

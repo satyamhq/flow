@@ -45,22 +45,22 @@ export default function IntegrationsPage() {
       />
 
       {selectedIntegration && (
-        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
+        <div className="p-4 rounded-lg bg-[var(--surface-base)] border border-[var(--border)] space-y-3 max-w-lg">
           <div className="flex items-center space-x-2">
             <Key className="w-4 h-4 text-[#8AB4F8]" />
-            <h3 className="text-xs font-semibold text-[#EDF2F7]">Configure {selectedIntegration.name}</h3>
+            <h3 className="text-xs font-semibold text-[var(--text-primary)]">Configure {selectedIntegration.name}</h3>
           </div>
-          <p className="text-[11px] text-[#9AA0A6]">
+          <p className="text-[11px] text-[var(--text-secondary)]">
             Enter your API credentials or authorization token to establish secure synchronization with {selectedIntegration.name}.
           </p>
           <div className="space-y-2">
-            <label className="text-[11px] text-[#9AA0A6] block">Access Token / Webhook Secret</label>
+            <label className="text-[11px] text-[var(--text-secondary)] block">Access Token / Webhook Secret</label>
             <input
               type="password"
               value={apiKeyInput}
               onChange={(e) => setApiKeyInput(e.target.value)}
               placeholder="sk_live_... / ghp_..."
-              className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+              className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
             />
           </div>
           <div className="flex justify-end space-x-2 pt-2">
@@ -80,7 +80,7 @@ export default function IntegrationsPage() {
             <CardHeader className="flex flex-row items-start justify-between pb-2">
               <div>
                 <CardTitle className="text-sm font-semibold">{item.name}</CardTitle>
-                <span className="block text-[10px] text-[#9AA0A6] uppercase tracking-wider font-mono mt-0.5">
+                <span className="block text-[10px] text-[var(--text-secondary)] uppercase tracking-wider font-mono mt-0.5">
                   {item.category}
                 </span>
               </div>
@@ -90,11 +90,11 @@ export default function IntegrationsPage() {
             </CardHeader>
 
             <CardContent>
-              <p className="text-xs text-[#9AA0A6] leading-relaxed">{item.desc}</p>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
             </CardContent>
 
-            <CardFooter className="pt-3 border-t border-[#202637] flex items-center justify-between text-xs">
-              <span className="text-[11px] text-[#9AA0A6] font-mono">Last sync: {item.lastSync}</span>
+            <CardFooter className="pt-3 border-t border-[var(--border)] flex items-center justify-between text-xs">
+              <span className="text-[11px] text-[var(--text-secondary)] font-mono">Last sync: {item.lastSync}</span>
               <Button
                 variant={item.status === 'connected' ? 'secondary' : 'primary'}
                 size="sm"

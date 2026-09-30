@@ -79,8 +79,8 @@ export default function EngineeringPage() {
             {d.sha}
           </Badge>
           <div>
-            <span className="font-semibold text-[#EDF2F7]">{d.msg}</span>
-            <span className="block text-[11px] text-[#9AA0A6]">by {d.author}</span>
+            <span className="font-semibold text-[var(--text-primary)]">{d.msg}</span>
+            <span className="block text-[11px] text-[var(--text-secondary)]">by {d.author}</span>
           </div>
         </div>
       ),
@@ -89,7 +89,7 @@ export default function EngineeringPage() {
       header: 'Environment',
       accessorKey: 'env',
       sortable: true,
-      cell: (d) => <span className="font-mono text-xs text-[#9AA0A6] uppercase">{d.env}</span>,
+      cell: (d) => <span className="font-mono text-xs text-[var(--text-secondary)] uppercase">{d.env}</span>,
     },
     {
       header: 'Status',
@@ -105,18 +105,18 @@ export default function EngineeringPage() {
       header: 'Build Duration',
       accessorKey: 'duration',
       sortable: true,
-      cell: (d) => <span className="font-mono text-xs text-[#9AA0A6]">{d.duration}</span>,
+      cell: (d) => <span className="font-mono text-xs text-[var(--text-secondary)]">{d.duration}</span>,
     },
     {
       header: 'Time',
       accessorKey: 'time',
       sortable: true,
-      cell: (d) => <span className="font-mono text-xs text-[#9AA0A6]">{d.time}</span>,
+      cell: (d) => <span className="font-mono text-xs text-[var(--text-secondary)]">{d.time}</span>,
     },
   ];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6">
       <PageHeader
         breadcrumbs={[
           { label: currentOrg.name, href: `/app/org/${currentOrg.slug}/overview` },
@@ -149,26 +149,26 @@ export default function EngineeringPage() {
       />
 
       {isModalOpen && (
-        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
-          <h3 className="text-xs font-semibold text-[#EDF2F7]">Record Build Deployment</h3>
+        <div className="p-4 rounded-lg bg-[var(--surface-base)] border border-[var(--border)] space-y-3 max-w-lg">
+          <h3 className="text-xs font-semibold text-[var(--text-primary)]">Record Build Deployment</h3>
           <form onSubmit={handleRecordDeployment} className="space-y-3">
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Commit Message</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Commit Message</label>
               <input
                 type="text"
                 required
                 value={formMsg}
                 onChange={(e) => setFormMsg(e.target.value)}
                 placeholder="e.g. feat(auth): add Supabase session persistence"
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Environment</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Environment</label>
               <select
                 value={formEnv}
                 onChange={(e) => setFormEnv(e.target.value)}
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               >
                 <option value="production">Production</option>
                 <option value="staging">Staging</option>

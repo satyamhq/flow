@@ -79,7 +79,7 @@ export default function PeoplePage() {
   ];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6">
       <PageHeader
         breadcrumbs={[
           { label: currentOrg.name, href: `/app/org/${currentOrg.slug}/overview` },
@@ -97,47 +97,47 @@ export default function PeoplePage() {
       />
 
       {isModalOpen && (
-        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
-          <h3 className="text-xs font-semibold text-[#EDF2F7]">Invite Team Member to {currentOrg.name}</h3>
+        <div className="p-4 rounded-lg bg-[var(--surface-base)] border border-[var(--border)] space-y-3 max-w-lg">
+          <h3 className="text-xs font-semibold text-[var(--text-primary)]">Invite Team Member to {currentOrg.name}</h3>
           <form onSubmit={handleInvite} className="space-y-3">
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Work Email</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Work Email</label>
               <input
                 type="email"
                 required
                 value={inviteEmail}
                 onChange={(e) => setInviteEmail(e.target.value)}
                 placeholder="colleague@company.com"
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Full Name (Optional)</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Full Name (Optional)</label>
               <input
                 type="text"
                 value={inviteName}
                 onChange={(e) => setInviteName(e.target.value)}
                 placeholder="e.g. Alex Morgan"
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[11px] text-[#9AA0A6] block mb-1">Role / Title</label>
+                <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Role / Title</label>
                 <input
                   type="text"
                   value={inviteRole}
                   onChange={(e) => setInviteRole(e.target.value)}
-                  className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                  className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
                 />
               </div>
               <div>
-                <label className="text-[11px] text-[#9AA0A6] block mb-1">Department</label>
+                <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Department</label>
                 <input
                   type="text"
                   value={inviteDept}
                   onChange={(e) => setInviteDept(e.target.value)}
-                  className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                  className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
                 />
               </div>
             </div>
@@ -158,12 +158,12 @@ export default function PeoplePage() {
           <Card key={m.id} className="space-y-3">
             <CardContent className="space-y-3">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-full bg-[#161D2D] border border-[#202637] flex items-center justify-center text-[#8AB4F8]">
+                <div className="w-10 h-10 rounded-full bg-[var(--surface-elevated)] border border-[var(--border)] flex items-center justify-center text-[#8AB4F8]">
                   <User className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="flex items-center space-x-2">
-                    <span className="text-xs font-semibold text-[#EDF2F7] block">{m.name}</span>
+                    <span className="text-xs font-semibold text-[var(--text-primary)] block">{m.name}</span>
                     {m.isCurrentUser && (
                       <Badge variant="info">You</Badge>
                     )}
@@ -172,18 +172,18 @@ export default function PeoplePage() {
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-[#181E2E] space-y-1.5 text-[11px] text-[#9AA0A6]">
+              <div className="pt-2 border-t border-[var(--border-subtle)] space-y-1.5 text-[11px] text-[var(--text-secondary)]">
                 <div className="flex justify-between">
                   <span>Department:</span>
-                  <span className="text-[#EDF2F7] font-medium">{m.dept}</span>
+                  <span className="text-[var(--text-primary)] font-medium">{m.dept}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Reporting:</span>
-                  <span className="text-[#EDF2F7] font-medium">{m.manager}</span>
+                  <span className="text-[var(--text-primary)] font-medium">{m.manager}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Email:</span>
-                  <span className="text-[#EDF2F7] font-mono text-[10px] truncate max-w-[150px]">{m.email}</span>
+                  <span className="text-[var(--text-primary)] font-mono text-[10px] truncate max-w-[150px]">{m.email}</span>
                 </div>
               </div>
             </CardContent>

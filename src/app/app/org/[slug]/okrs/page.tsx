@@ -57,7 +57,7 @@ export default function OKRsPage() {
         <div className="space-y-4">
           {goals.map((goal) => (
             <Card key={goal.id} className="p-4 space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#202637] pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border)] pb-3">
                 <div className="space-y-1">
                   <div className="flex items-center space-x-2">
                     <CardTitle className="text-sm font-semibold">{goal.title}</CardTitle>
@@ -65,13 +65,13 @@ export default function OKRsPage() {
                       {goal.status.replace('_', ' ')}
                     </Badge>
                   </div>
-                  <p className="text-xs text-[#9AA0A6]">{goal.description || 'Company strategic objective.'}</p>
+                  <p className="text-xs text-[var(--text-secondary)]">{goal.description || 'Company strategic objective.'}</p>
                 </div>
 
                 <div className="flex items-center space-x-3">
                   <div className="text-right">
-                    <span className="font-mono text-xs font-semibold text-[#EDF2F7]">{goal.progress}%</span>
-                    <div className="w-24 h-1.5 bg-[#161D2D] rounded-full overflow-hidden mt-1">
+                    <span className="font-mono text-xs font-semibold text-[var(--text-primary)]">{goal.progress}%</span>
+                    <div className="w-24 h-1.5 bg-[var(--surface-elevated)] rounded-full overflow-hidden mt-1">
                       <div className="h-full bg-[#1A73E8] rounded-full" style={{ width: `${goal.progress}%` }} />
                     </div>
                   </div>
@@ -81,19 +81,19 @@ export default function OKRsPage() {
               {goal.keyResults && goal.keyResults.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                   {goal.keyResults.map((kr) => (
-                    <div key={kr.id} className="p-3 rounded bg-[#161D2D] border border-[#202637] space-y-1 text-xs">
+                    <div key={kr.id} className="p-3 rounded bg-[var(--surface-elevated)] border border-[var(--border)] space-y-1 text-xs">
                       <div className="flex justify-between items-center">
-                        <span className="font-medium text-[#EDF2F7]">{kr.title}</span>
+                        <span className="font-medium text-[var(--text-primary)]">{kr.title}</span>
                         <Badge variant="neutral">{kr.status.replace('_', ' ')}</Badge>
                       </div>
-                      <div className="text-[11px] text-[#9AA0A6] font-mono">
+                      <div className="text-[11px] text-[var(--text-secondary)] font-mono">
                         {kr.currentValue} / {kr.targetValue} {kr.unit}
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-[11px] text-[#9AA0A6] italic">No key results linked yet.</p>
+                <p className="text-[11px] text-[var(--text-secondary)] italic">No key results linked yet.</p>
               )}
             </Card>
           ))}

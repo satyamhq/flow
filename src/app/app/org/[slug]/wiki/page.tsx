@@ -57,28 +57,28 @@ export default function WikiPage() {
       />
 
       {isModalOpen && (
-        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
-          <h3 className="text-xs font-semibold text-[#EDF2F7]">Publish Wiki Article</h3>
+        <div className="p-4 rounded-lg bg-[var(--surface-base)] border border-[var(--border)] space-y-3 max-w-lg">
+          <h3 className="text-xs font-semibold text-[var(--text-primary)]">Publish Wiki Article</h3>
           <form onSubmit={handleCreateWiki} className="space-y-3">
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Article Title</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Article Title</label>
               <input
                 type="text"
                 required
                 value={formTitle}
                 onChange={(e) => setFormTitle(e.target.value)}
                 placeholder="e.g. Engineering Handbook: Development Standards"
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Article Body / Content</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Article Body / Content</label>
               <textarea
                 value={formDesc}
                 onChange={(e) => setFormDesc(e.target.value)}
                 rows={3}
                 placeholder="Summary or content of the handbook page..."
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div className="flex justify-end space-x-2 pt-2">
@@ -110,8 +110,8 @@ export default function WikiPage() {
                 <Badge variant="neutral">{sec.category}</Badge>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-xs text-[#9AA0A6] leading-relaxed">{sec.snippet}</p>
-                <div className="pt-2 border-t border-[#202637] flex items-center justify-between text-[11px] text-[#9AA0A6]">
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{sec.snippet}</p>
+                <div className="pt-2 border-t border-[var(--border)] flex items-center justify-between text-[11px] text-[var(--text-secondary)]">
                   <span>Author: {sec.author || currentUser.fullName}</span>
                   <span className="font-mono">{sec.updated}</span>
                 </div>

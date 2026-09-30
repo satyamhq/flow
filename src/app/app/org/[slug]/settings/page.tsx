@@ -33,7 +33,7 @@ export default function SettingsPage() {
 
       <Card>
         <CardHeader className="pb-2">
-          <CardTitle className="text-xs font-semibold text-[#9AA0A6] uppercase tracking-wider">
+          <CardTitle className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">
             Localization & Financial Currency
           </CardTitle>
         </CardHeader>
@@ -62,10 +62,10 @@ export default function SettingsPage() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <div>
-            <CardTitle className="text-xs font-semibold text-[#9AA0A6] uppercase tracking-wider">
+            <CardTitle className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">
               Custom Entity Schema Fields
             </CardTitle>
-            <p className="text-xs text-[#9AA0A6] mt-0.5">
+            <p className="text-xs text-[var(--text-secondary)] mt-0.5">
               Extend Customers, Projects, Leads, and Tasks with custom attributes (Text, Number, Select, URL, Relation).
             </p>
           </div>
@@ -76,18 +76,18 @@ export default function SettingsPage() {
         </CardHeader>
 
         <CardContent>
-          <div className="divide-y divide-[#202637] text-xs">
+          <div className="divide-y divide-[var(--border)] text-xs">
             <div className="py-3 flex justify-between items-center">
               <div>
-                <span className="font-semibold text-[#EDF2F7] block">Customer Security Score</span>
-                <span className="text-[11px] text-[#9AA0A6] font-mono">Type: Number • Target: Customers</span>
+                <span className="font-semibold text-[var(--text-primary)] block">Customer Security Score</span>
+                <span className="text-[11px] text-[var(--text-secondary)] font-mono">Type: Number • Target: Customers</span>
               </div>
               <Badge variant="success">Active</Badge>
             </div>
             <div className="py-3 flex justify-between items-center">
               <div>
-                <span className="font-semibold text-[#EDF2F7] block">Project Risk Category</span>
-                <span className="text-[11px] text-[#9AA0A6] font-mono">Type: Single Select • Target: Projects</span>
+                <span className="font-semibold text-[var(--text-primary)] block">Project Risk Category</span>
+                <span className="text-[11px] text-[var(--text-secondary)] font-mono">Type: Single Select • Target: Projects</span>
               </div>
               <Badge variant="success">Active</Badge>
             </div>

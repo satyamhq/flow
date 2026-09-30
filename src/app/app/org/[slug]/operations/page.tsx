@@ -66,8 +66,8 @@ export default function OperationsPage() {
       sortable: true,
       cell: (sop) => (
         <div>
-          <span className="font-semibold text-[#EDF2F7] block">{sop.title}</span>
-          <span className="text-[11px] text-[#9AA0A6]">Department: {sop.dept}</span>
+          <span className="font-semibold text-[var(--text-primary)] block">{sop.title}</span>
+          <span className="text-[11px] text-[var(--text-secondary)]">Department: {sop.dept}</span>
         </div>
       ),
     },
@@ -81,7 +81,7 @@ export default function OperationsPage() {
       header: 'Last Verified',
       accessorKey: 'verified',
       sortable: true,
-      cell: (sop) => <span className="font-mono text-xs text-[#9AA0A6]">{sop.verified}</span>,
+      cell: (sop) => <span className="font-mono text-xs text-[var(--text-secondary)]">{sop.verified}</span>,
     },
     {
       header: 'Status',
@@ -115,27 +115,27 @@ export default function OperationsPage() {
       />
 
       {isModalOpen && (
-        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
-          <h3 className="text-xs font-semibold text-[#EDF2F7]">Register Standard Operating Procedure</h3>
+        <div className="p-4 rounded-lg bg-[var(--surface-base)] border border-[var(--border)] space-y-3 max-w-lg">
+          <h3 className="text-xs font-semibold text-[var(--text-primary)]">Register Standard Operating Procedure</h3>
           <form onSubmit={handleCreateSop} className="space-y-3">
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">SOP Title</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">SOP Title</label>
               <input
                 type="text"
                 required
                 value={formTitle}
                 onChange={(e) => setFormTitle(e.target.value)}
                 placeholder="e.g. SOP-01: Zero-Downtime Database Failover"
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Department</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Department</label>
               <input
                 type="text"
                 value={formDept}
                 onChange={(e) => setFormDept(e.target.value)}
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div className="flex justify-end space-x-2 pt-2">

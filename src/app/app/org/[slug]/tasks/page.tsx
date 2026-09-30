@@ -32,7 +32,7 @@ export default function TasksPage() {
             className={`w-4 h-4 rounded border flex items-center justify-center transition-colors cursor-pointer ${
               t.status === 'done'
                 ? 'bg-[#1A73E8] border-[#1A73E8] text-white'
-                : 'border-[#303B54] hover:border-[#1A73E8]'
+                : 'border-[var(--border-strong)] hover:border-[#1A73E8]'
             }`}
           >
             {t.status === 'done' && <CheckCircle2 className="w-3.5 h-3.5" />}
@@ -40,13 +40,13 @@ export default function TasksPage() {
           <div className="space-y-0.5">
             <span
               className={`font-medium ${
-                t.status === 'done' ? 'line-through text-[#5F6368]' : 'text-[#EDF2F7]'
+                t.status === 'done' ? 'line-through text-[var(--text-muted)]' : 'text-[var(--text-primary)]'
               }`}
             >
               {t.title}
             </span>
             {t.description && (
-              <p className="text-[11px] text-[#9AA0A6] line-clamp-1">{t.description}</p>
+              <p className="text-[11px] text-[var(--text-secondary)] line-clamp-1">{t.description}</p>
             )}
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function TasksPage() {
       accessorKey: 'projectName',
       sortable: true,
       cell: (t) => (
-        <span className="text-[11px] text-[#9AA0A6] font-medium truncate max-w-[140px] block">
+        <span className="text-[11px] text-[var(--text-secondary)] font-medium truncate max-w-[140px] block">
           {t.projectName || 'General Operations'}
         </span>
       ),
@@ -70,10 +70,10 @@ export default function TasksPage() {
             <img
               src={t.assignee.avatar}
               alt={t.assignee.name}
-              className="w-5 h-5 rounded-full object-cover border border-[#202637]"
+              className="w-5 h-5 rounded-full object-cover border border-[var(--border)]"
             />
           )}
-          <span className="text-[11px] text-[#EDF2F7]">{t.assignee?.name || 'Unassigned'}</span>
+          <span className="text-[11px] text-[var(--text-primary)]">{t.assignee?.name || 'Unassigned'}</span>
         </div>
       ),
     },
@@ -99,12 +99,12 @@ export default function TasksPage() {
       header: 'Due Date',
       accessorKey: 'dueDate',
       sortable: true,
-      cell: (t) => <span className="font-mono text-xs text-[#9AA0A6]">{t.dueDate}</span>,
+      cell: (t) => <span className="font-mono text-xs text-[var(--text-secondary)]">{t.dueDate}</span>,
     },
   ];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6">
       <PageHeader
         breadcrumbs={[
           { label: currentOrg.name, href: `/app/org/${currentOrg.slug}/overview` },
@@ -160,13 +160,13 @@ export default function TasksPage() {
           </div>
         )}
         filterableSlot={
-          <div className="flex items-center bg-[#111622] border border-[#202637] rounded-md p-0.5 text-xs">
+          <div className="flex items-center bg-[var(--surface-base)] border border-[var(--border)] rounded-md p-0.5 text-xs">
             {['all', 'todo', 'in_progress', 'blocked', 'done'].map((s) => (
               <button
                 key={s}
                 onClick={() => setStatusFilter(s)}
                 className={`px-3 py-1 rounded transition-colors cursor-pointer capitalize ${
-                  statusFilter === s ? 'bg-[#1A73E8] text-white font-medium shadow-sm' : 'text-[#9AA0A6] hover:text-[#EDF2F7]'
+                  statusFilter === s ? 'bg-[#1A73E8] text-white font-medium shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                 }`}
               >
                 {s.replace('_', ' ')}

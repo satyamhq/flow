@@ -20,8 +20,8 @@ export default function CustomersPage() {
       sortable: true,
       cell: (c) => (
         <div>
-          <span className="font-semibold text-[#EDF2F7]">{c.name}</span>
-          <span className="block text-[11px] text-[#9AA0A6] font-mono">{c.domain}</span>
+          <span className="font-semibold text-[var(--text-primary)]">{c.name}</span>
+          <span className="block text-[11px] text-[var(--text-secondary)] font-mono">{c.domain}</span>
         </div>
       ),
     },
@@ -39,7 +39,7 @@ export default function CustomersPage() {
       header: 'Annual Recurring (ARR)',
       accessorKey: 'arr',
       sortable: true,
-      cell: (c) => <span className="font-mono font-semibold text-[#EDF2F7]">{formatCurrency(c.arr)}</span>,
+      cell: (c) => <span className="font-mono font-semibold text-[var(--text-primary)]">{formatCurrency(c.arr)}</span>,
     },
     {
       header: 'Health Score',
@@ -57,12 +57,12 @@ export default function CustomersPage() {
       header: 'Account Owner',
       accessorKey: 'accountOwner',
       sortable: true,
-      cell: (c) => <span className="text-xs text-[#EDF2F7]">{c.accountOwner}</span>,
+      cell: (c) => <span className="text-xs text-[var(--text-primary)]">{c.accountOwner}</span>,
     },
   ];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6">
       <PageHeader
         breadcrumbs={[
           { label: currentOrg.name, href: `/app/org/${currentOrg.slug}/overview` },

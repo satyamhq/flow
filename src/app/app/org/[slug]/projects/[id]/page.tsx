@@ -162,21 +162,21 @@ export default function ProjectDetailPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-xs text-[#EDF2F7] leading-relaxed">
+                <p className="text-xs text-[var(--text-primary)] leading-relaxed">
                   This project represents a mission-critical infrastructure milestone for Flow. It unifies high-density navigation, multi-tenant Postgres RLS policies, sub-100ms client caching, and universal command palette integration.
                 </p>
-                <div className="grid grid-cols-3 gap-4 pt-2 border-t border-[#202637] text-xs">
+                <div className="grid grid-cols-3 gap-4 pt-2 border-t border-[var(--border)] text-xs">
                   <div>
-                    <span className="text-[#9AA0A6] block text-[11px]">Start Date</span>
-                    <span className="text-[#EDF2F7] font-mono">{project.startDate}</span>
+                    <span className="text-[var(--text-secondary)] block text-[11px]">Start Date</span>
+                    <span className="text-[var(--text-primary)] font-mono">{project.startDate}</span>
                   </div>
                   <div>
-                    <span className="text-[#9AA0A6] block text-[11px]">Department</span>
-                    <span className="text-[#EDF2F7] font-medium">{project.team}</span>
+                    <span className="text-[var(--text-secondary)] block text-[11px]">Department</span>
+                    <span className="text-[var(--text-primary)] font-medium">{project.team}</span>
                   </div>
                   <div>
-                    <span className="text-[#9AA0A6] block text-[11px]">Priority Tier</span>
-                    <span className="text-[#EDF2F7] uppercase font-mono">{project.priority}</span>
+                    <span className="text-[var(--text-secondary)] block text-[11px]">Priority Tier</span>
+                    <span className="text-[var(--text-primary)] uppercase font-mono">{project.priority}</span>
                   </div>
                 </div>
               </CardContent>
@@ -188,12 +188,12 @@ export default function ProjectDetailPage() {
                   <CheckCircle2 className="w-4 h-4 text-[#8AB4F8]" />
                   <span>Work Items Snapshot</span>
                 </CardTitle>
-                <span className="text-xs text-[#9AA0A6] font-mono">{projectTasks.length} items</span>
+                <span className="text-xs text-[var(--text-secondary)] font-mono">{projectTasks.length} items</span>
               </CardHeader>
               <CardContent>
-                <div className="divide-y divide-[#202637]">
+                <div className="divide-y divide-[var(--border)]">
                   {projectTasks.map((t) => (
-                    <div key={t.id} className="py-3 flex items-center justify-between hover:bg-[#161D2D]/40 px-2 rounded transition-colors">
+                    <div key={t.id} className="py-3 flex items-center justify-between hover:bg-[var(--surface-elevated)]/40 px-2 rounded transition-colors">
                       <div className="flex items-center space-x-3">
                         <button
                           onClick={() => updateTaskStatus(t.id, t.status === 'done' ? 'todo' : 'done')}
@@ -203,7 +203,7 @@ export default function ProjectDetailPage() {
                         >
                           {t.status === 'done' && <CheckCircle2 className="w-3 h-3" />}
                         </button>
-                        <span className={`text-xs font-medium ${t.status === 'done' ? 'line-through text-[#5F6368]' : 'text-[#EDF2F7]'}`}>
+                        <span className={`text-xs font-medium ${t.status === 'done' ? 'line-through text-[var(--text-muted)]' : 'text-[var(--text-primary)]'}`}>
                           {t.title}
                         </span>
                       </div>
@@ -211,7 +211,7 @@ export default function ProjectDetailPage() {
                         <Badge variant={t.priority === 'urgent' ? 'error' : t.priority === 'high' ? 'warning' : 'neutral'}>
                           {t.priority}
                         </Badge>
-                        <span className="text-[11px] text-[#9AA0A6] font-mono">{t.dueDate}</span>
+                        <span className="text-[11px] text-[var(--text-secondary)] font-mono">{t.dueDate}</span>
                       </div>
                     </div>
                   ))}
@@ -223,12 +223,12 @@ export default function ProjectDetailPage() {
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="text-xs font-semibold uppercase tracking-wider text-[#9AA0A6]">
+                <CardTitle className="text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]">
                   Strategic Goal Link
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p className="text-xs text-[#EDF2F7]">
+                <p className="text-xs text-[var(--text-primary)]">
                   Connected to <span className="text-[#8AB4F8] font-medium">Reach $20M ARR with 85% Gross Margin</span>.
                 </p>
                 <div className="pt-2">
@@ -239,19 +239,19 @@ export default function ProjectDetailPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-xs font-semibold uppercase tracking-wider text-[#9AA0A6]">
+                <CardTitle className="text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]">
                   Audit History
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3 text-xs text-[#9AA0A6]">
-                  <div className="p-2.5 rounded bg-[#0E131F] border border-[#202637]">
-                    <span className="text-[#EDF2F7] font-medium">Satyam</span> updated project progress to {project.progress}%
-                    <span className="block text-[10px] text-[#5F6368] mt-0.5 font-mono">14 minutes ago</span>
+                <div className="space-y-3 text-xs text-[var(--text-secondary)]">
+                  <div className="p-2.5 rounded bg-[var(--surface-header)] border border-[var(--border)]">
+                    <span className="text-[var(--text-primary)] font-medium">Satyam</span> updated project progress to {project.progress}%
+                    <span className="block text-[10px] text-[var(--text-muted)] mt-0.5 font-mono">14 minutes ago</span>
                   </div>
-                  <div className="p-2.5 rounded bg-[#0E131F] border border-[#202637]">
-                    <span className="text-[#EDF2F7] font-medium">Marcus Chen</span> approved deployment #452
-                    <span className="block text-[10px] text-[#5F6368] mt-0.5 font-mono">Yesterday at 4:18 PM</span>
+                  <div className="p-2.5 rounded bg-[var(--surface-header)] border border-[var(--border)]">
+                    <span className="text-[var(--text-primary)] font-medium">Marcus Chen</span> approved deployment #452
+                    <span className="block text-[10px] text-[var(--text-muted)] mt-0.5 font-mono">Yesterday at 4:18 PM</span>
                   </div>
                 </div>
               </CardContent>
@@ -277,9 +277,9 @@ export default function ProjectDetailPage() {
             </Button>
           </CardHeader>
           <CardContent>
-            <div className="divide-y divide-[#202637]">
+            <div className="divide-y divide-[var(--border)]">
               {projectTasks.map((t) => (
-                <div key={t.id} className="py-3 flex items-center justify-between hover:bg-[#161D2D]/40 px-2 rounded transition-colors">
+                <div key={t.id} className="py-3 flex items-center justify-between hover:bg-[var(--surface-elevated)]/40 px-2 rounded transition-colors">
                   <div className="flex items-center space-x-3">
                     <button
                       onClick={() => updateTaskStatus(t.id, t.status === 'done' ? 'todo' : 'done')}
@@ -289,7 +289,7 @@ export default function ProjectDetailPage() {
                     >
                       {t.status === 'done' && <CheckCircle2 className="w-3.5 h-3.5" />}
                     </button>
-                    <span className={`text-xs font-medium ${t.status === 'done' ? 'line-through text-[#5F6368]' : 'text-[#EDF2F7]'}`}>
+                    <span className={`text-xs font-medium ${t.status === 'done' ? 'line-through text-[var(--text-muted)]' : 'text-[var(--text-primary)]'}`}>
                       {t.title}
                     </span>
                   </div>
@@ -297,7 +297,7 @@ export default function ProjectDetailPage() {
                     <Badge variant={t.priority === 'urgent' ? 'error' : t.priority === 'high' ? 'warning' : 'neutral'}>
                       {t.priority}
                     </Badge>
-                    <span className="text-[#9AA0A6] font-mono text-[11px]">{t.dueDate}</span>
+                    <span className="text-[var(--text-secondary)] font-mono text-[11px]">{t.dueDate}</span>
                   </div>
                 </div>
               ))}
@@ -308,9 +308,9 @@ export default function ProjectDetailPage() {
 
       {activeTab === 'timeline' && (
         <Card>
-          <CardContent className="p-8 text-center text-xs text-[#9AA0A6] space-y-3">
+          <CardContent className="p-8 text-center text-xs text-[var(--text-secondary)] space-y-3">
             <Calendar className="w-8 h-8 text-[#8AB4F8] mx-auto" />
-            <p className="font-semibold text-sm text-[#EDF2F7]">Gantt & Execution Timeline</p>
+            <p className="font-semibold text-sm text-[var(--text-primary)]">Gantt & Execution Timeline</p>
             <p className="max-w-md mx-auto">Phase 1 (Complete) → Phase 2: RLS Testing (Active) → Phase 3: GA Rollout (Oct 15)</p>
           </CardContent>
         </Card>
@@ -318,9 +318,9 @@ export default function ProjectDetailPage() {
 
       {activeTab === 'documents' && (
         <Card>
-          <CardContent className="p-8 text-center text-xs text-[#9AA0A6] space-y-3">
+          <CardContent className="p-8 text-center text-xs text-[var(--text-secondary)] space-y-3">
             <FileText className="w-8 h-8 text-[#8AB4F8] mx-auto" />
-            <p className="font-semibold text-sm text-[#EDF2F7]">Linked Documentation</p>
+            <p className="font-semibold text-sm text-[var(--text-primary)]">Linked Documentation</p>
             <p className="max-w-md mx-auto">Architecture RFC 042: Multi-tenant partitioning & Vercel edge caching rules.</p>
           </CardContent>
         </Card>
@@ -332,13 +332,13 @@ export default function ProjectDetailPage() {
             <CardTitle className="text-sm font-semibold">Immutable Audit Trail</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="p-3 rounded bg-[#0E131F] border border-[#202637] text-xs">
-              <span className="text-[#EDF2F7] font-medium">Task Completed</span> by Marcus Chen
-              <span className="block text-[11px] text-[#9AA0A6] mt-0.5 font-mono">Yesterday at 4:18 PM</span>
+            <div className="p-3 rounded bg-[var(--surface-header)] border border-[var(--border)] text-xs">
+              <span className="text-[var(--text-primary)] font-medium">Task Completed</span> by Marcus Chen
+              <span className="block text-[11px] text-[var(--text-secondary)] mt-0.5 font-mono">Yesterday at 4:18 PM</span>
             </div>
-            <div className="p-3 rounded bg-[#0E131F] border border-[#202637] text-xs">
-              <span className="text-[#EDF2F7] font-medium">Budget Updated</span> by Satyam
-              <span className="block text-[11px] text-[#9AA0A6] mt-0.5 font-mono">3 days ago</span>
+            <div className="p-3 rounded bg-[var(--surface-header)] border border-[var(--border)] text-xs">
+              <span className="text-[var(--text-primary)] font-medium">Budget Updated</span> by Satyam
+              <span className="block text-[11px] text-[var(--text-secondary)] mt-0.5 font-mono">3 days ago</span>
             </div>
           </CardContent>
         </Card>

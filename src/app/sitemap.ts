@@ -5,14 +5,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     '',
     '/login',
+    '/signup',
     '/onboarding',
-    '/app/org/acme/overview',
-    '/app/org/acme/projects',
-    '/app/org/acme/tasks',
-    '/app/org/acme/finance',
-    '/app/org/acme/engineering',
-    '/app/org/acme/flow-ai',
-    '/app/org/acme/integrations',
   ];
 
   return routes.map((route) => ({

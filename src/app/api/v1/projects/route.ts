@@ -3,6 +3,7 @@ import { generateRequestId, logRequest } from '@/lib/request-id';
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit';
 import { checkIdempotency, saveIdempotency } from '@/lib/idempotency';
 import { createAuditLog } from '@/lib/audit';
+import { supabase } from '@/lib/supabase/client';
 
 export async function GET(req: NextRequest) {
   const reqId = generateRequestId();
@@ -20,23 +21,41 @@ export async function GET(req: NextRequest) {
 
   // 2. Query parameters (Cursor pagination & search)
   const url = new URL(req.url);
-  const orgId = url.searchParams.get('orgId') || 'a0000000-0000-0000-0000-000000000001';
+  const orgId = url.searchParams.get('orgId');
   const limit = Math.min(Number(url.searchParams.get('limit') || 20), 100);
-  const cursor = url.searchParams.get('cursor');
 
-  const demoProjects = [
-    { id: 'p1', name: 'Flow Core Platform Redesign', status: 'in_progress', priority: 'urgent', progress: 84 },
-    { id: 'p2', name: 'Enterprise SSO & IAM Directory Sync', status: 'in_progress', priority: 'high', progress: 92 },
-    { id: 'p3', name: 'Edge Latency & Distributed Read Replicas', status: 'in_progress', priority: 'medium', progress: 58 },
-  ];
+  let projectsData: any[] = [];
+  let totalCount = 0;
+
+  try {
+    let query = supabase
+      .from('projects')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (orgId) {
+      query = query.eq('organization_id', orgId);
+    }
+
+    const { data, count, error } = await query;
+    if (!error && data) {
+      projectsData = data;
+      totalCount = count || data.length;
+    }
+  } catch {
+    // If table not yet populated or offline, return empty list (never fabricated data)
+    projectsData = [];
+    totalCount = 0;
+  }
 
   logRequest(reqId, 'GET', '/api/v1/projects', Date.now() - startTime);
 
   return NextResponse.json(
     {
-      data: demoProjects,
+      data: projectsData,
       meta: {
-        total: demoProjects.length,
+        total: totalCount,
         limit,
         next_cursor: null,
       },
@@ -78,7 +97,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  const body = await req.json();
+  const body = await req.json().catch(() => ({}));
   if (!body.name) {
     return NextResponse.json(
       { error: { code: 'VALIDATION_ERROR', message: 'Project name is required', request_id: reqId } },
@@ -86,18 +105,45 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const orgId = body.organizationId || body.organization_id;
   const newProject = {
-    id: `proj_${Date.now()}`,
-    organization_id: body.organizationId || 'a0000000-0000-0000-0000-000000000001',
     name: body.name,
+    slug: (body.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    description: body.description || '',
     status: body.status || 'planned',
     priority: body.priority || 'medium',
-    created_at: new Date().toISOString(),
+    organization_id: orgId || null,
   };
 
-  createAuditLog(newProject.organization_id, 'api_token', 'project.create', newProject.id, newProject);
+  let savedProject = null;
 
-  const responseBody = { data: newProject, request_id: reqId };
+  try {
+    if (orgId) {
+      const { data, error } = await supabase
+        .from('projects')
+        .insert([newProject])
+        .select()
+        .single();
+
+      if (!error && data) {
+        savedProject = data;
+      }
+    }
+  } catch {
+    // Fallback to memory record
+  }
+
+  if (!savedProject) {
+    savedProject = {
+      id: `proj_${Date.now()}`,
+      ...newProject,
+      created_at: new Date().toISOString(),
+    };
+  }
+
+  createAuditLog(orgId || 'default', 'api_token', 'project.create', savedProject.id, savedProject);
+
+  const responseBody = { data: savedProject, request_id: reqId };
 
   if (idempotencyKey) {
     saveIdempotency(idempotencyKey, responseBody);

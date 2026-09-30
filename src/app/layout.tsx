@@ -79,8 +79,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark h-full bg-[#070A0F] text-slate-100 antialiased" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-full flex flex-col bg-[#070A0F]`}>
+    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+      <body className={`${inter.className} min-h-full flex flex-col bg-[var(--bg-app)] text-[var(--text-primary)] transition-colors`}>
         <FlowProvider>
           {children}
           <CommandPalette />

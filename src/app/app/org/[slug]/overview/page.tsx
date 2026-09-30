@@ -47,7 +47,7 @@ export default function OverviewPage() {
   const ranges = ['Today', '7 days', '30 days', 'Quarter', 'Year'];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6">
       <PageHeader
         breadcrumbs={[
           { label: currentOrg.name, href: `/app/org/${currentOrg.slug}/overview` },
@@ -66,7 +66,7 @@ export default function OverviewPage() {
         }
         actions={
           <div className="flex items-center space-x-2">
-            <div className="flex items-center bg-[#111622] border border-[#202637] rounded-md p-0.5 text-xs">
+            <div className="flex items-center bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md p-0.5 text-xs">
               {ranges.map((r) => (
                 <button
                   key={r}
@@ -74,7 +74,7 @@ export default function OverviewPage() {
                   className={`px-2.5 py-1 rounded transition-colors cursor-pointer ${
                     dateRange === r
                       ? 'bg-[#1A73E8] text-white font-medium shadow-sm'
-                      : 'text-[#9AA0A6] hover:text-[#EDF2F7]'
+                      : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
                   }`}
                 >
                   {r}
@@ -100,13 +100,13 @@ export default function OverviewPage() {
       {/* Empty State when no business data exists yet */}
       {!hasData ? (
         <Card className="p-8 text-center space-y-6 max-w-3xl mx-auto border-dashed">
-          <div className="w-14 h-14 rounded-2xl bg-[#161D2D] border border-[#202637] flex items-center justify-center mx-auto text-[#8AB4F8]">
+          <div className="w-14 h-14 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--border)] flex items-center justify-center mx-auto text-[#8AB4F8]">
             <Sparkles className="w-7 h-7" />
           </div>
 
           <div className="space-y-2">
-            <h2 className="text-lg font-bold text-[#EDF2F7]">Welcome to Flow</h2>
-            <p className="text-xs text-[#9AA0A6] max-w-md mx-auto leading-relaxed">
+            <h2 className="text-lg font-bold text-[var(--text-primary)]">Welcome to Flow</h2>
+            <p className="text-xs text-[var(--text-secondary)] max-w-md mx-auto leading-relaxed">
               Your organization doesn&apos;t have any data yet. Create your first project, invite your team, or record a customer to initialize your company operating system.
             </p>
           </div>
@@ -196,9 +196,9 @@ export default function OverviewPage() {
                   <div>
                     <div className="flex items-center space-x-2">
                       <Badge variant="info">Flow AI • {insights[0].category}</Badge>
-                      <span className="text-[11px] text-[#9AA0A6]">{insights[0].timestamp}</span>
+                      <span className="text-[11px] text-[var(--text-secondary)]">{insights[0].timestamp}</span>
                     </div>
-                    <h3 className="text-xs font-semibold text-[#EDF2F7] mt-1">{insights[0].title}</h3>
+                    <h3 className="text-xs font-semibold text-[var(--text-primary)] mt-1">{insights[0].title}</h3>
                   </div>
                 </div>
 
@@ -211,17 +211,17 @@ export default function OverviewPage() {
                 </Link>
               </div>
 
-              <p className="text-xs text-[#9AA0A6] pl-8 leading-relaxed">
+              <p className="text-xs text-[var(--text-secondary)] pl-8 leading-relaxed">
                 {insights[0].summary}
               </p>
 
-              <div className="pl-8 pt-2 border-t border-[#181E2E] flex flex-wrap items-center gap-4 text-[11px] text-[#9AA0A6]">
+              <div className="pl-8 pt-2 border-t border-[var(--border-subtle)] flex flex-wrap items-center gap-4 text-[11px] text-[var(--text-secondary)]">
                 <div>
-                  <span className="font-medium text-[#EDF2F7]">Evidence: </span>
+                  <span className="font-medium text-[var(--text-primary)]">Evidence: </span>
                   <span>{insights[0].supportingData}</span>
                 </div>
                 <div>
-                  <span className="font-medium text-[#EDF2F7]">Action: </span>
+                  <span className="font-medium text-[var(--text-primary)]">Action: </span>
                   <span className="text-[#34A853] font-medium">{insights[0].recommendedAction}</span>
                 </div>
               </div>
@@ -257,7 +257,7 @@ export default function OverviewPage() {
                   }}
                 />
               ) : (
-                <div className="divide-y divide-[#181E2E]">
+                <div className="divide-y divide-[var(--border-subtle)]">
                   {projects.slice(0, 5).map((p) => (
                     <div
                       key={p.id}
@@ -267,7 +267,7 @@ export default function OverviewPage() {
                         <div className="flex items-center space-x-2">
                           <Link
                             href={`/app/org/${currentOrg.slug}/projects/${p.id}`}
-                            className="text-xs font-semibold text-[#EDF2F7] hover:text-[#8AB4F8] transition-colors"
+                            className="text-xs font-semibold text-[var(--text-primary)] hover:text-[#8AB4F8] transition-colors"
                           >
                             {p.name}
                           </Link>
@@ -275,19 +275,19 @@ export default function OverviewPage() {
                             {p.priority}
                           </Badge>
                         </div>
-                        <p className="text-[11px] text-[#9AA0A6] line-clamp-1">{p.description || 'No description provided.'}</p>
+                        <p className="text-[11px] text-[var(--text-secondary)] line-clamp-1">{p.description || 'No description provided.'}</p>
                       </div>
 
                       <div className="flex items-center space-x-4 text-xs flex-shrink-0">
                         <div className="text-right">
-                          <span className="font-mono text-xs font-semibold text-[#EDF2F7]">{p.progress}%</span>
-                          <div className="w-20 h-1.5 bg-[#161D2D] rounded-full overflow-hidden mt-1">
+                          <span className="font-mono text-xs font-semibold text-[var(--text-primary)]">{p.progress}%</span>
+                          <div className="w-20 h-1.5 bg-[var(--surface-elevated)] rounded-full overflow-hidden mt-1">
                             <div className="h-full bg-[#1A73E8] rounded-full" style={{ width: `${p.progress}%` }} />
                           </div>
                         </div>
-                        <div className="text-right text-[11px] text-[#9AA0A6]">
-                          <span className="font-mono text-[#EDF2F7]">Due {p.dueDate}</span>
-                          <span className="block text-[10px] text-[#5F6368]">{p.team}</span>
+                        <div className="text-right text-[11px] text-[var(--text-secondary)]">
+                          <span className="font-mono text-[var(--text-primary)]">Due {p.dueDate}</span>
+                          <span className="block text-[10px] text-[var(--text-muted)]">{p.team}</span>
                         </div>
                       </div>
                     </div>
@@ -312,20 +312,20 @@ export default function OverviewPage() {
                 {blockedTasks.length === 0 ? (
                   <div className="p-6 text-center space-y-2">
                     <CheckCircle2 className="w-6 h-6 text-[#34A853] mx-auto" />
-                    <p className="text-xs font-medium text-[#EDF2F7]">All systems nominal</p>
-                    <p className="text-[11px] text-[#9AA0A6]">
+                    <p className="text-xs font-medium text-[var(--text-primary)]">All systems nominal</p>
+                    <p className="text-[11px] text-[var(--text-secondary)]">
                       0 blocked tasks or critical impediments detected in this organization.
                     </p>
                   </div>
                 ) : (
                   blockedTasks.map((t) => (
-                    <div key={t.id} className="p-3 rounded bg-[#161D2D] border border-[#202637] space-y-1">
+                    <div key={t.id} className="p-3 rounded bg-[var(--surface-elevated)] border border-[var(--border)] space-y-1">
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-semibold text-[#EA4335]">Blocked Work Item</span>
-                        <span className="text-[10px] text-[#9AA0A6] font-mono">{t.projectName}</span>
+                        <span className="text-[10px] text-[var(--text-secondary)] font-mono">{t.projectName}</span>
                       </div>
-                      <p className="text-[11px] text-[#EDF2F7] line-clamp-2">{t.title}</p>
-                      <div className="pt-1 flex items-center justify-between text-[10px] text-[#9AA0A6]">
+                      <p className="text-[11px] text-[var(--text-primary)] line-clamp-2">{t.title}</p>
+                      <div className="pt-1 flex items-center justify-between text-[10px] text-[var(--text-secondary)]">
                         <span>Assigned: {t.assignee?.name || 'Unassigned'}</span>
                         <Link href={`/app/org/${currentOrg.slug}/tasks`} className="text-[#8AB4F8] hover:underline">
                           Review item →

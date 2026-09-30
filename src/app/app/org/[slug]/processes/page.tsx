@@ -84,38 +84,38 @@ export default function ProcessesPage() {
       />
 
       {isModalOpen && (
-        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
-          <h3 className="text-xs font-semibold text-[#EDF2F7]">Define Operating Process</h3>
+        <div className="p-4 rounded-lg bg-[var(--surface-base)] border border-[var(--border)] space-y-3 max-w-lg">
+          <h3 className="text-xs font-semibold text-[var(--text-primary)]">Define Operating Process</h3>
           <form onSubmit={handleCreateProcess} className="space-y-3">
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Process Name</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Process Name</label>
               <input
                 type="text"
                 required
                 value={formName}
                 onChange={(e) => setFormName(e.target.value)}
                 placeholder="e.g. Weekly Security Review"
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[11px] text-[#9AA0A6] block mb-1">Owner / Department</label>
+                <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Owner / Department</label>
                 <input
                   type="text"
                   value={formOwner}
                   onChange={(e) => setFormOwner(e.target.value)}
-                  className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                  className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
                 />
               </div>
               <div>
-                <label className="text-[11px] text-[#9AA0A6] block mb-1">Cadence / Schedule</label>
+                <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Cadence / Schedule</label>
                 <input
                   type="text"
                   value={formCadence}
                   onChange={(e) => setFormCadence(e.target.value)}
                   placeholder="e.g. Continuous / Monthly"
-                  className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                  className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
                 />
               </div>
             </div>
@@ -148,7 +148,7 @@ export default function ProcessesPage() {
                 <Badge variant="success">{proc.status}</Badge>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center justify-between text-xs text-[#9AA0A6] pt-2 border-t border-[#202637]">
+                <div className="flex items-center justify-between text-xs text-[var(--text-secondary)] pt-2 border-t border-[var(--border)]">
                   <span>Owner: {proc.owner}</span>
                   <span className="font-mono">{proc.cadence}</span>
                 </div>

@@ -42,7 +42,7 @@ export function MetricCard({
     if (React.isValidElement(icon)) return icon;
     if (typeof icon === 'function' || typeof icon === 'object') {
       const IconComponent = icon as React.ComponentType<{ className?: string }>;
-      return <IconComponent className="w-4 h-4 text-[#8AB4F8]" />;
+      return <IconComponent className="w-4 h-4 text-[#1A73E8]" />;
     }
     return null;
   };
@@ -50,24 +50,24 @@ export function MetricCard({
   return (
     <div
       className={cn(
-        'p-4 bg-[#111622] border border-[#202637] rounded-lg shadow-sm hover:border-[#303B54] transition-all flex flex-col justify-between',
+        'p-5 bg-[var(--surface-base)] border border-[var(--border)] rounded-lg shadow-sm hover:border-[var(--border-strong)] transition-all flex flex-col justify-between',
         className
       )}
     >
-      <div className="flex items-center justify-between text-xs text-[#9AA0A6]">
+      <div className="flex items-center justify-between text-xs text-[var(--text-secondary)]">
         <span className="font-medium tracking-wide">{title}</span>
         {renderIcon()}
       </div>
 
-      <div className="mt-2 flex items-baseline justify-between gap-2">
-        <span className="text-2xl font-bold font-mono text-[#EDF2F7] tracking-tight">{value}</span>
+      <div className="mt-3 flex items-baseline justify-between gap-2">
+        <span className="text-2xl font-bold font-mono text-[var(--text-primary)] tracking-tight">{value}</span>
         {deltaLabel !== undefined && (
           <span
             className={cn(
               'flex items-center text-xs font-semibold font-mono',
-              isPositive && 'text-[#34A853]',
-              isNegative && 'text-[#EA4335]',
-              !isPositive && !isNegative && 'text-[#9AA0A6]'
+              isPositive && 'text-[var(--success-text)]',
+              isNegative && 'text-[var(--error-text)]',
+              !isPositive && !isNegative && 'text-[var(--text-secondary)]'
             )}
           >
             {isPositive && <ArrowUpRight className="w-3.5 h-3.5 mr-0.5" />}
@@ -78,7 +78,7 @@ export function MetricCard({
       </div>
 
       {subText && (
-        <div className="mt-2 pt-2 border-t border-[#181E2E] text-[11px] text-[#9AA0A6] flex items-center justify-between">
+        <div className="mt-3 pt-2.5 border-t border-[var(--border-subtle)] text-[11px] text-[var(--text-secondary)] flex items-center justify-between">
           <span>{subText}</span>
         </div>
       )}

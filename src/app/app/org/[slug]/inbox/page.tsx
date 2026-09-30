@@ -15,7 +15,7 @@ export default function InboxPage() {
   const unreadCount = notifications.filter((n: any) => !n.read).length;
 
   return (
-    <div className="space-y-6 max-w-5xl">
+    <div className="space-y-6">
       <PageHeader
         breadcrumbs={[
           { label: currentOrg.name, href: `/app/org/${currentOrg.slug}/overview` },
@@ -48,12 +48,12 @@ export default function InboxPage() {
       ) : (
         <Card>
           <CardContent className="p-0">
-            <div className="divide-y divide-[#202637]">
+            <div className="divide-y divide-[var(--border)]">
               {notifications.map((item: any) => (
                 <div
                   key={item.id}
                   onClick={() => markNotificationRead(item.id)}
-                  className={`p-4 flex items-center justify-between text-xs hover:bg-[#161D2D]/40 transition-colors cursor-pointer ${
+                  className={`p-4 flex items-center justify-between text-xs hover:bg-[var(--surface-elevated)]/40 transition-colors cursor-pointer ${
                     !item.read ? 'bg-[#1A73E8]/5' : ''
                   }`}
                 >
@@ -63,11 +63,11 @@ export default function InboxPage() {
                     ) : (
                       <span className="w-2 h-2 rounded-full bg-transparent" />
                     )}
-                    <span className={`font-medium ${item.read ? 'text-[#9AA0A6]' : 'text-[#EDF2F7]'}`}>
+                    <span className={`font-medium ${item.read ? 'text-[var(--text-secondary)]' : 'text-[var(--text-primary)]'}`}>
                       {item.title}
                     </span>
                   </div>
-                  <span className="text-[#9AA0A6] font-mono text-[11px]">{item.time}</span>
+                  <span className="text-[var(--text-secondary)] font-mono text-[11px]">{item.time}</span>
                 </div>
               ))}
             </div>

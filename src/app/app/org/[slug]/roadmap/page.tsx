@@ -43,15 +43,15 @@ export default function RoadmapPage() {
             <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
               <div className="space-y-1">
                 <div className="flex items-center space-x-2">
-                  <span className="font-semibold text-[#EDF2F7]">{p.name}</span>
+                  <span className="font-semibold text-[var(--text-primary)]">{p.name}</span>
                   <Badge variant={p.priority === 'urgent' ? 'error' : p.priority === 'high' ? 'warning' : 'neutral'}>
                     {p.priority}
                   </Badge>
                 </div>
-                <p className="text-[11px] text-[#9AA0A6]">{p.description}</p>
+                <p className="text-[11px] text-[var(--text-secondary)]">{p.description}</p>
               </div>
               <div className="flex items-center space-x-4">
-                <span className="text-[#9AA0A6] font-mono text-[11px]">
+                <span className="text-[var(--text-secondary)] font-mono text-[11px]">
                   {p.startDate} → {p.dueDate}
                 </span>
                 <Badge variant={p.progress > 70 ? 'success' : 'info'}>

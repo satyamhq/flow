@@ -36,7 +36,7 @@ export default function InsightsPage() {
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <div className="flex items-center space-x-2">
                 <Badge variant="neutral">{insight.category}</Badge>
-                <span className="text-xs text-[#9AA0A6] font-mono">{insight.timestamp}</span>
+                <span className="text-xs text-[var(--text-secondary)] font-mono">{insight.timestamp}</span>
               </div>
               <Badge variant="success">
                 Confidence: {Math.round(insight.confidenceScore * 100)}%
@@ -45,17 +45,17 @@ export default function InsightsPage() {
 
             <CardContent className="space-y-3">
               <CardTitle className="text-sm font-semibold">{insight.title}</CardTitle>
-              <p className="text-xs text-[#9AA0A6] leading-relaxed">{insight.summary}</p>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{insight.summary}</p>
 
-              <div className="pt-3 border-t border-[#202637] grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div className="p-3 rounded bg-[#0E131F] border border-[#202637]">
-                  <span className="text-[10px] font-semibold text-[#9AA0A6] uppercase tracking-wider block mb-1">
+              <div className="pt-3 border-t border-[var(--border)] grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-3 rounded bg-[var(--surface-header)] border border-[var(--border)]">
+                  <span className="text-[10px] font-semibold text-[var(--text-secondary)] uppercase tracking-wider block mb-1">
                     Supporting Telemetry
                   </span>
-                  <span className="text-[#EDF2F7]">{insight.supportingData}</span>
+                  <span className="text-[var(--text-primary)]">{insight.supportingData}</span>
                 </div>
 
-                <div className="p-3 rounded bg-[#0E131F] border border-[#202637]">
+                <div className="p-3 rounded bg-[var(--surface-header)] border border-[var(--border)]">
                   <span className="text-[10px] font-semibold text-[#81C995] uppercase tracking-wider block mb-1">
                     Recommended Action
                   </span>

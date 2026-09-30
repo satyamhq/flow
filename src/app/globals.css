@@ -2,11 +2,11 @@
 
 :root {
   /* ==========================================================================
-     FLOW DESIGN SYSTEM TOKENS (Google Cloud Console Inspired)
-     Structured for enterprise density, calm neutrals, and sharp hierarchy.
+     FLOW ENTERPRISE DESIGN SYSTEM TOKENS (Google Cloud Console Inspired)
+     Structured for enterprise density, calm neutrals, sharp contrast & hierarchy.
      ========================================================================== */
 
-  /* Neutral Surface System (Dark - Default) */
+  /* Neutral Surface System (Dark Mode - Default) */
   --bg-app: #0B0E14;             /* Root canvas deep background */
   --surface-base: #111622;       /* Primary module/card background */
   --surface-elevated: #161D2D;   /* Hover, active cards, popovers, modals */
@@ -21,17 +21,19 @@
   --primary-foreground: #FFFFFF;
 
   /* Semantic Status Tokens */
-  --success: #0D904F;            /* Controlled emerald */
+  --success: #0D904F;
   --success-subtle: rgba(13, 144, 79, 0.14);
   --success-text: #34A853;
 
-  --warning: #E37400;            /* Restrained amber */
+  --warning: #E37400;
   --warning-subtle: rgba(227, 116, 0, 0.14);
   --warning-text: #FBBC04;
 
-  --error: #D93025;              /* Clean enterprise red */
+  --error: #D93025;
   --error-subtle: rgba(217, 48, 37, 0.14);
   --error-text: #EA4335;
+  --danger: #D93025;
+  --danger-hover: #B3261E;
 
   --info: #1A73E8;
   --info-subtle: rgba(26, 115, 232, 0.12);
@@ -39,7 +41,7 @@
 
   /* Typography / Text Tokens */
   --text-primary: #EDF2F7;       /* High-contrast headings & primary data */
-  --text-secondary: #9AA0A6;     /* Google Cloud neutral secondary */
+  --text-secondary: #9AA0A6;     /* Neutral secondary */
   --text-muted: #5F6368;         /* Subdued metadata & timestamps */
   --text-disabled: #3C4043;
   --text-link: #8AB4F8;
@@ -53,23 +55,37 @@
   /* Shadows (Restrained enterprise depth) */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
   --shadow-md: 0 4px 12px 0 rgba(0, 0, 0, 0.45);
-  /* Aliases for universal component compatibility */
-  --color-bg: var(--bg-app);
-  --color-surface: var(--surface-base);
-  --color-surface-hover: var(--surface-elevated);
-  --color-border: var(--border);
-  --color-text: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
+  --shadow-lg: 0 12px 32px 0 rgba(0, 0, 0, 0.65);
+
+  /* Specific Master Theme Tokens */
+  --background: var(--bg-app);
+  --surface: var(--surface-base);
+  --input: var(--surface-subtle);
+  --sidebar: var(--surface-header);
+  --header: var(--surface-header);
+
+  /* Universal Component Token Aliases */
+  --color-bg: #0B0E14;
+  --color-surface: #111622;
+  --color-surface-hover: #161D2D;
+  --color-border: #202637;
+  --color-border-subtle: #181E2E;
+  --color-text: #EDF2F7;
+  --color-text-secondary: #9AA0A6;
+  --color-text-muted: #5F6368;
+
+  /* Layout System Standardized Scale */
+  --sidebar-width: 256px;
+  --sidebar-width-collapsed: 64px;
+  --topbar-height: 48px;
+  --content-gutter: 32px;
+  --page-padding: 24px;
+  --content-max-width: 1440px;
+  --section-gap: 24px;
+  --card-gap: 20px;
 }
 
-.light, [data-theme="light"] {
-  /* Aliases for universal component compatibility */
-  --color-bg: #F8F9FA;
-  --color-surface: #FFFFFF;
-  --color-surface-hover: #F1F3F4;
-  --color-border: #DADCE0;
-  --color-text: #202124;
-  --color-text-secondary: #5F6368;
+.light, [data-theme="light"], html.light, body.light {
   /* Google Cloud Console Light Theme Tokens */
   --bg-app: #F8F9FA;
   --surface-base: #FFFFFF;
@@ -82,6 +98,24 @@
   --primary-active: #185ABC;
   --primary-subtle: rgba(26, 115, 232, 0.08);
   --primary-foreground: #FFFFFF;
+
+  --success: #188038;
+  --success-subtle: rgba(24, 128, 56, 0.1);
+  --success-text: #188038;
+
+  --warning: #E37400;
+  --warning-subtle: rgba(227, 116, 0, 0.1);
+  --warning-text: #B06000;
+
+  --error: #D93025;
+  --error-subtle: rgba(217, 48, 37, 0.1);
+  --error-text: #D93025;
+  --danger: #D93025;
+  --danger-hover: #B3261E;
+
+  --info: #1A73E8;
+  --info-subtle: rgba(26, 115, 232, 0.08);
+  --info-text: #1A73E8;
 
   --text-primary: #202124;
   --text-secondary: #5F6368;
@@ -97,20 +131,86 @@
   --shadow-sm: 0 1px 2px 0 rgba(60, 64, 67, 0.15);
   --shadow-md: 0 4px 12px 0 rgba(60, 64, 67, 0.20);
   --shadow-lg: 0 12px 32px 0 rgba(60, 64, 67, 0.25);
+
+  --background: var(--bg-app);
+  --surface: var(--surface-base);
+  --input: #FFFFFF;
+  --sidebar: #FFFFFF;
+  --header: #FFFFFF;
+
+  --color-bg: #F8F9FA;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F1F3F4;
+  --color-border: #DADCE0;
+  --color-border-subtle: #E8EAED;
+  --color-text: #202124;
+  --color-text-secondary: #5F6368;
+  --color-text-muted: #80868B;
 }
 
 body {
   background-color: var(--bg-app);
   color: var(--text-primary);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Google Sans', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum";
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  overflow-x: hidden;
+}
+
+/* Standardized Typography Classes */
+.font-display {
+  font-size: 2rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.font-h1, .font-page-title {
+  font-size: 1.5rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+}
+
+.font-h2, .font-section-title {
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.font-h3 {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.font-body {
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  color: var(--text-secondary);
+}
+
+.font-small {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--text-secondary);
+}
+
+.font-caption {
+  font-size: 0.6875rem;
+  line-height: 0.875rem;
+  color: var(--text-muted);
 }
 
 /* Custom minimal enterprise scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -131,11 +231,16 @@ body {
   background: #37425C;
 }
 
+.light .custom-scrollbar::-webkit-scrollbar-thumb:hover,
+[data-theme="light"] .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #BDC1C6;
+}
+
 /* Enterprise table hover row */
 .flow-table-row {
   transition: background-color 0.12s ease;
 }
 
 .flow-table-row:hover {
-  background-color: var(--surface-subtle);
+  background-color: var(--surface-elevated);
 }

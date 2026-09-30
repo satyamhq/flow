@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const { createOrganization } = useFlow();
+  const { createOrganization, theme, setTheme } = useFlow();
 
   const [step, setStep] = useState(1);
   const totalSteps = 10;
@@ -68,23 +68,23 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0E14] flex flex-col justify-between p-6 sm:p-12 text-[#EDF2F7]">
+    <div className="min-h-screen bg-[var(--color-bg)] flex flex-col justify-between p-6 sm:p-12 text-[var(--color-text)] transition-colors">
       {/* Top Header */}
       <div className="max-w-2xl mx-auto w-full flex items-center justify-between">
         <div className="flex items-center space-x-2.5">
-          <div className="w-8 h-8 rounded bg-[#1A73E8] flex items-center justify-center text-white font-bold text-sm">
+          <div className="w-8 h-8 rounded-lg bg-[#1A73E8] flex items-center justify-center text-white font-bold text-sm">
             F
           </div>
-          <span className="font-semibold tracking-wider text-sm">FLOW CONSOLE</span>
+          <span className="font-semibold tracking-wider text-sm">Flow Console</span>
         </div>
-        <div className="text-xs font-mono text-[#9AA0A6]">
-          Step <span className="text-[#8AB4F8] font-bold">{step}</span> of {totalSteps}
+        <div className="text-xs font-mono text-[var(--color-text-secondary)]">
+          Step <span className="text-[#1A73E8] font-bold">{step}</span> of {totalSteps}
         </div>
       </div>
 
       {/* Progress Bar */}
       <div className="max-w-2xl mx-auto w-full my-4">
-        <div className="w-full h-1 bg-[#161D2D] rounded-full overflow-hidden">
+        <div className="w-full h-1 bg-[var(--color-surface)] rounded-full overflow-hidden">
           <div
             className="h-full bg-[#1A73E8] rounded-full transition-all duration-300"
             style={{ width: `${(step / totalSteps) * 100}%` }}
@@ -94,13 +94,13 @@ export default function OnboardingPage() {
 
       {/* Main Step Card */}
       <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col justify-center py-6">
-        <Card className="border-[#202637]">
+        <Card className="border-[var(--color-border)]">
           <CardContent className="p-8 space-y-6">
             {step === 1 && (
               <div className="space-y-4">
                 <Badge variant="info">Step 1 • Identity</Badge>
-                <h2 className="text-xl font-semibold text-[#EDF2F7] tracking-tight">What is your company or organization name?</h2>
-                <p className="text-xs text-[#9AA0A6]">This will be the root tenant for your company workspace and resource graph.</p>
+                <h2 className="text-xl font-semibold text-[var(--color-text)] tracking-tight">What is your company or organization name?</h2>
+                <p className="text-xs text-[var(--color-text-secondary)]">This will be the root tenant for your company workspace and resource graph.</p>
                 <Input
                   autoFocus
                   value={orgName}
@@ -136,7 +136,7 @@ export default function OnboardingPage() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Describe your core product, target audience, and business model..."
-                  className="w-full bg-[#111622] border border-[#202637] rounded-md px-3.5 py-2.5 text-xs text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8] resize-none"
+                  className="w-full bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md px-3.5 py-2.5 text-xs text-[var(--color-text)] focus:outline-none focus:border-[#1A73E8] resize-none"
                 />
               </div>
             )}
@@ -166,8 +166,8 @@ export default function OnboardingPage() {
                       onClick={() => setStage(s)}
                       className={`p-3 rounded-md border text-xs font-medium text-left transition-colors cursor-pointer ${
                         stage === s
-                          ? 'border-[#1A73E8] bg-[#1A73E8]/20 text-[#EDF2F7]'
-                          : 'border-[#202637] bg-[#111622] text-[#9AA0A6] hover:border-[#8AB4F8]/50'
+                          ? 'border-[#1A73E8] bg-[#1A73E8]/20 text-[var(--color-text)]'
+                          : 'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-secondary)] hover:border-[#1A73E8]/40'
                       }`}
                     >
                       {s}
@@ -189,8 +189,8 @@ export default function OnboardingPage() {
                       onClick={() => setTeamSize(sz)}
                       className={`p-3 rounded-md border text-xs font-medium text-left transition-colors cursor-pointer ${
                         teamSize === sz
-                          ? 'border-[#1A73E8] bg-[#1A73E8]/20 text-[#EDF2F7]'
-                          : 'border-[#202637] bg-[#111622] text-[#9AA0A6] hover:border-[#8AB4F8]/50'
+                          ? 'border-[#1A73E8] bg-[#1A73E8]/20 text-[var(--color-text)]'
+                          : 'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-secondary)] hover:border-[#1A73E8]/40'
                       }`}
                     >
                       {sz} employees
@@ -212,8 +212,8 @@ export default function OnboardingPage() {
                       onClick={() => setRole(r)}
                       className={`p-2 rounded-md border text-[11px] font-medium transition-colors cursor-pointer ${
                         role === r
-                          ? 'border-[#1A73E8] bg-[#1A73E8]/20 text-[#EDF2F7]'
-                          : 'border-[#202637] bg-[#111622] text-[#9AA0A6] hover:border-[#8AB4F8]/50'
+                          ? 'border-[#1A73E8] bg-[#1A73E8]/20 text-[var(--color-text)]'
+                          : 'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-secondary)] hover:border-[#1A73E8]/40'
                       }`}
                     >
                       {r}
@@ -237,8 +237,8 @@ export default function OnboardingPage() {
                         onClick={() => toggleGoal(g)}
                         className={`w-full p-3 rounded-md border text-xs font-medium flex items-center justify-between transition-colors cursor-pointer ${
                           isChecked
-                            ? 'border-[#1A73E8] bg-[#1A73E8]/20 text-[#EDF2F7]'
-                            : 'border-[#202637] bg-[#111622] text-[#9AA0A6] hover:border-[#8AB4F8]/50'
+                            ? 'border-[#1A73E8] bg-[#1A73E8]/20 text-[var(--color-text)]'
+                            : 'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-secondary)] hover:border-[#1A73E8]/40'
                         }`}
                       >
                         <span>{g}</span>
@@ -260,7 +260,7 @@ export default function OnboardingPage() {
                   value={teamInvites}
                   onChange={(e) => setTeamInvites(e.target.value)}
                   placeholder="cto@company.com, headofproduct@company.com"
-                  className="w-full bg-[#111622] border border-[#202637] rounded-md px-3.5 py-2.5 text-xs text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8] resize-none font-mono"
+                  className="w-full bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md px-3.5 py-2.5 text-xs text-[var(--color-text)] focus:outline-none focus:border-[#1A73E8] resize-none font-mono"
                 />
               </div>
             )}
@@ -281,8 +281,8 @@ export default function OnboardingPage() {
                       onClick={() => setWorkspaceConfig(conf)}
                       className={`w-full p-3 rounded-md border text-xs font-medium flex items-center justify-between text-left transition-colors cursor-pointer ${
                         workspaceConfig === conf
-                          ? 'border-[#1A73E8] bg-[#1A73E8]/20 text-[#EDF2F7]'
-                          : 'border-[#202637] bg-[#111622] text-[#9AA0A6] hover:border-[#8AB4F8]/50'
+                          ? 'border-[#1A73E8] bg-[#1A73E8]/20 text-[var(--color-text)]'
+                          : 'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-secondary)] hover:border-[#1A73E8]/40'
                       }`}
                     >
                       <span>{conf}</span>
@@ -294,7 +294,7 @@ export default function OnboardingPage() {
             )}
 
             {/* Navigation Controls */}
-            <div className="flex items-center justify-between pt-6 border-t border-[#202637]">
+            <div className="flex items-center justify-between pt-6 border-t border-[var(--color-border)]">
               <Button
                 type="button"
                 variant="secondary"
@@ -321,7 +321,7 @@ export default function OnboardingPage() {
       </div>
 
       {/* Footer */}
-      <div className="max-w-2xl mx-auto w-full text-center text-[11px] text-[#5F6368] font-mono">
+      <div className="max-w-2xl mx-auto w-full text-center text-[11px] text-[var(--color-text-secondary)] font-mono">
         Flow Enterprise Multi-Tenant Infrastructure • Encrypted in Transit & at Rest
       </div>
     </div>

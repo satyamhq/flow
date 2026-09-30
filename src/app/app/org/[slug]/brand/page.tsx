@@ -48,7 +48,7 @@ export default function BrandPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xs text-[#EDF2F7] leading-relaxed">
+            <p className="text-xs text-[var(--text-primary)] leading-relaxed">
               Intelligent, calm, precise, technical, trustworthy, and enterprise-grade. We avoid generic hype, excessive decorative animations, and gimmicks in favor of clean infrastructure aesthetics.
             </p>
           </CardContent>
@@ -61,7 +61,7 @@ export default function BrandPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xs text-[#EDF2F7] leading-relaxed font-medium">
+            <p className="text-xs text-[var(--text-primary)] leading-relaxed font-medium">
               &ldquo;Flow — The operating system for modern companies. Everything your company needs to move forward.&rdquo;
             </p>
           </CardContent>
@@ -76,15 +76,15 @@ export default function BrandPage() {
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {colors.map((c, idx) => (
-              <div key={idx} className="p-3 rounded bg-[#0E131F] border border-[#202637] space-y-2">
+              <div key={idx} className="p-3 rounded bg-[var(--surface-header)] border border-[var(--border)] space-y-2">
                 <div
-                  className="w-full h-12 rounded border border-[#202637] shadow-inner"
+                  className="w-full h-12 rounded border border-[var(--border)] shadow-inner"
                   style={{ backgroundColor: c.hex }}
                 />
                 <div>
-                  <span className="text-xs font-semibold text-[#EDF2F7] block truncate">{c.name}</span>
+                  <span className="text-xs font-semibold text-[var(--text-primary)] block truncate">{c.name}</span>
                   <span className="block font-mono text-[10px] text-[#8AB4F8] mt-0.5">{c.hex}</span>
-                  <span className="block text-[10px] text-[#9AA0A6] mt-0.5 truncate">{c.role}</span>
+                  <span className="block text-[10px] text-[var(--text-secondary)] mt-0.5 truncate">{c.role}</span>
                 </div>
               </div>
             ))}
@@ -98,8 +98,8 @@ export default function BrandPage() {
           <CardTitle className="text-sm font-semibold">Typography Standards</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-xs text-[#9AA0A6] leading-relaxed">
-            Primary Interface: <span className="font-semibold text-[#EDF2F7]">Inter / System Sans-Serif</span> with tabular numeric feature flags (<code className="font-mono text-[11px] text-[#8AB4F8]">tnum</code>) for enterprise metrics. Monospace: <span className="font-semibold text-[#EDF2F7]">JetBrains Mono / Geist Mono</span> for code and financial figures.
+          <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+            Primary Interface: <span className="font-semibold text-[var(--text-primary)]">Inter / System Sans-Serif</span> with tabular numeric feature flags (<code className="font-mono text-[11px] text-[#8AB4F8]">tnum</code>) for enterprise metrics. Monospace: <span className="font-semibold text-[var(--text-primary)]">JetBrains Mono / Geist Mono</span> for code and financial figures.
           </p>
         </CardContent>
       </Card>

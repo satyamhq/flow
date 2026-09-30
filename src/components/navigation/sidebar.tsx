@@ -40,8 +40,8 @@ import {
   ChevronDown,
   ChevronRight,
   Sliders,
+  X,
 } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 
 interface NavSection {
   title: string;
@@ -55,7 +55,7 @@ interface NavSection {
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { currentOrg } = useFlow();
+  const { currentOrg, isMobileMenuOpen, setIsMobileMenuOpen } = useFlow();
   const prefix = `/app/org/${currentOrg.slug}`;
 
   const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({});
@@ -99,53 +99,43 @@ export function Sidebar() {
     {
       title: 'GROW',
       items: [
+        { name: 'Sales Pipeline', href: `${prefix}/sales`, icon: Briefcase },
+        { name: 'Customers & CRM', href: `${prefix}/customers`, icon: Users },
         { name: 'Marketing', href: `${prefix}/marketing`, icon: Megaphone },
-        { name: 'Brand', href: `${prefix}/brand`, icon: Palette },
-        { name: 'Sales CRM', href: `${prefix}/sales`, icon: Briefcase },
-        { name: 'Customers', href: `${prefix}/customers`, icon: Users },
+        { name: 'Brand Assets', href: `${prefix}/brand`, icon: Palette },
         { name: 'Distribution', href: `${prefix}/distribution`, icon: Network },
       ],
     },
     {
       title: 'OPERATE',
       items: [
-        { name: 'Operations', href: `${prefix}/operations`, icon: Cpu },
-        { name: 'Finance', href: `${prefix}/finance`, icon: DollarSign },
+        { name: 'Finance & Ledger', href: `${prefix}/finance`, icon: DollarSign },
         { name: 'People & HR', href: `${prefix}/people`, icon: UserCheck },
-        { name: 'Processes', href: `${prefix}/processes`, icon: Workflow },
+        { name: 'Operations', href: `${prefix}/operations`, icon: Cpu },
+        { name: 'Processes & SOPs', href: `${prefix}/processes`, icon: Workflow },
       ],
     },
     {
       title: 'KNOWLEDGE',
       items: [
         { name: 'Documents', href: `${prefix}/documents`, icon: FileText },
-        { name: 'Wiki', href: `${prefix}/wiki`, icon: BookOpen },
+        { name: 'Company Wiki', href: `${prefix}/wiki`, icon: BookOpen },
       ],
     },
     {
-      title: 'DATA',
+      title: 'INTELLIGENCE & DATA',
       items: [
         { name: 'Analytics', href: `${prefix}/analytics`, icon: BarChart3 },
         { name: 'Reports', href: `${prefix}/reports`, icon: FileSpreadsheet },
-      ],
-    },
-    {
-      title: 'AUTOMATE',
-      items: [
-        { name: 'Workflows', href: `${prefix}/automations`, icon: GitBranch },
-        { name: 'Integrations', href: `${prefix}/integrations`, icon: Sliders },
-      ],
-    },
-    {
-      title: 'INTELLIGENCE',
-      items: [
         { name: 'Flow AI', href: `${prefix}/flow-ai`, icon: Bot, badge: 'Agent' },
         { name: 'Insights', href: `${prefix}/insights`, icon: Sparkles },
       ],
     },
     {
-      title: 'ADMIN',
+      title: 'SYSTEM',
       items: [
+        { name: 'Automations', href: `${prefix}/automations`, icon: GitBranch },
+        { name: 'Integrations', href: `${prefix}/integrations`, icon: Sliders },
         { name: 'Organization', href: `${prefix}/admin`, icon: Building },
         { name: 'Security & IAM', href: `${prefix}/admin?tab=security`, icon: ShieldAlert },
         { name: 'Billing', href: `${prefix}/admin?tab=billing`, icon: CreditCard },
@@ -154,16 +144,33 @@ export function Sidebar() {
     },
   ];
 
-  return (
-    <aside className="w-56 h-[calc(100vh-3rem)] bg-[var(--surface-header)] border-r border-[var(--border)] flex flex-col justify-between overflow-y-auto select-none text-[var(--text-primary)] text-xs custom-scrollbar transition-colors">
-      <div className="py-2.5 px-2 space-y-3">
+  const sidebarContent = (
+    <div className="flex flex-col h-full justify-between">
+      {/* Top Header on mobile drawer */}
+      <div className="lg:hidden flex items-center justify-between p-3 border-b border-[var(--border)] bg-[var(--surface-header)]">
+        <div className="flex items-center space-x-2">
+          <div className="w-5 h-5 rounded bg-[#1A73E8] flex items-center justify-center text-white font-bold text-[10px]">
+            F
+          </div>
+          <span className="font-bold text-xs tracking-wider text-[var(--text-primary)]">NAVIGATION</span>
+        </div>
+        <button
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="p-1 rounded text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* Nav List */}
+      <div className="py-3 px-2 space-y-3 overflow-y-auto flex-1 custom-scrollbar">
         {navSections.map((section) => {
           const isCollapsed = collapsedSections[section.title];
           return (
             <div key={section.title} className="space-y-0.5">
               <button
                 onClick={() => toggleSection(section.title)}
-                className="w-full flex items-center justify-between px-2 py-1 text-[10px] font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] tracking-wider uppercase transition-colors cursor-pointer"
+                className="w-full flex items-center justify-between px-2.5 py-1 text-[10px] font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] tracking-wider uppercase transition-colors cursor-pointer"
               >
                 <span>{section.title}</span>
                 {isCollapsed ? (
@@ -183,21 +190,22 @@ export function Sidebar() {
                       <Link
                         key={item.name}
                         href={item.href}
-                        className={`flex items-center justify-between px-2.5 py-1.5 rounded font-medium transition-all ${
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`flex items-center justify-between px-2.5 py-1.5 rounded-md font-medium text-xs transition-all ${
                           isActive
-                            ? 'bg-[rgba(26,115,232,0.12)] text-[#1A73E8] border border-[rgba(26,115,232,0.3)] font-semibold'
-                            : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-elevated)]'
+                            ? 'bg-[var(--primary-subtle)] text-[#1A73E8] border border-[rgba(26,115,232,0.25)] font-semibold'
+                            : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-elevated)] border border-transparent'
                         }`}
                       >
                         <div className="flex items-center space-x-2.5 truncate">
-                          <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#1A73E8]' : 'text-[var(--text-secondary)]'}`} />
+                          <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${isActive ? 'text-[#1A73E8]' : 'text-[var(--text-secondary)]'}`} />
                           <span className="truncate">{item.name}</span>
                         </div>
                         {item.badge && (
                           <span
                             className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono ${
                               item.badge === 'Agent'
-                                ? 'bg-[rgba(26,115,232,0.2)] text-[#1A73E8] border border-[rgba(26,115,232,0.35)]'
+                                ? 'bg-[rgba(26,115,232,0.18)] text-[#1A73E8] border border-[rgba(26,115,232,0.3)]'
                                 : 'bg-[var(--surface-elevated)] text-[var(--text-secondary)] border border-[var(--border)]'
                             }`}
                           >
@@ -222,6 +230,32 @@ export function Sidebar() {
         </div>
         <span className="text-[10px] text-[var(--text-muted)]">Flow v2.4</span>
       </div>
-    </aside>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Mobile Drawer Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm animate-in fade-in"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Sidebar (Drawer) */}
+      <aside
+        className={`lg:hidden fixed inset-y-0 left-0 z-50 w-64 bg-[var(--surface-header)] border-r border-[var(--border)] shadow-2xl transition-transform duration-200 ease-in-out ${
+          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        {sidebarContent}
+      </aside>
+
+      {/* Desktop Persistent Sidebar */}
+      <aside className="hidden lg:flex w-64 flex-shrink-0 h-[calc(100vh-3rem)] bg-[var(--surface-header)] border-r border-[var(--border)] flex-col justify-between select-none text-[var(--text-primary)] text-xs transition-colors">
+        {sidebarContent}
+      </aside>
+    </>
   );
 }

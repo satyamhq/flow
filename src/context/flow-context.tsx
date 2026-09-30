@@ -47,10 +47,15 @@ export interface FlowContextType {
   createOrganization: (org: Partial<Organization>) => Promise<Organization>;
 
   // Theme
-  theme: 'light' | 'dark';
-  setTheme: (theme: 'light' | 'dark') => void;
+  theme: 'light' | 'dark' | 'system';
+  resolvedTheme: 'light' | 'dark';
+  setTheme: (theme: 'light' | 'dark' | 'system') => void;
 
-  // Global UI State
+  // Global UI & Navigation Layout State
+  isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: (open: boolean) => void;
+  isSidebarCollapsed: boolean;
+  setIsSidebarCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
   isSearchOpen: boolean;
   setIsSearchOpen: (open: boolean) => void;
   isCreateOpen: boolean;
@@ -135,7 +140,10 @@ export function FlowProvider({ children }: { children: ReactNode }) {
     department: 'Operations',
   });
 
-  const [theme, setThemeState] = useState<'light' | 'dark'>('dark');
+  const [theme, setThemeState] = useState<'light' | 'dark' | 'system'>('dark');
+  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('dark');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [currentOrg, setCurrentOrg] = useState<Organization>(createDefaultWorkspace());
 
@@ -163,28 +171,52 @@ export function FlowProvider({ children }: { children: ReactNode }) {
     { id: 'google', name: 'Google Workspace', category: 'Operations', desc: 'Calendar scheduling and SSO access.', status: 'disconnected', lastSync: 'Never' },
   ]);
 
-  // Apply theme to document element
-  const setTheme = useCallback((newTheme: 'light' | 'dark') => {
-    setThemeState(newTheme);
+  // Apply theme to document element with system preference detection
+  const applyTheme = useCallback((mode: 'light' | 'dark' | 'system') => {
+    setThemeState(mode);
+    let effective: 'light' | 'dark' = 'dark';
+    if (mode === 'system') {
+      if (typeof window !== 'undefined') {
+        effective = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+    } else {
+      effective = mode;
+    }
+    setResolvedTheme(effective);
+
     if (typeof document !== 'undefined') {
-      if (newTheme === 'light') {
+      if (effective === 'light') {
         document.documentElement.classList.add('light');
         document.documentElement.setAttribute('data-theme', 'light');
       } else {
         document.documentElement.classList.remove('light');
         document.documentElement.removeAttribute('data-theme');
       }
-      localStorage.setItem('flow_theme', newTheme);
+      localStorage.setItem('flow_theme', mode);
     }
   }, []);
 
-  // Initialize theme from storage
+  const setTheme = useCallback((newTheme: 'light' | 'dark' | 'system') => {
+    applyTheme(newTheme);
+  }, [applyTheme]);
+
+  // Initialize theme from storage and bind media query listener for system mode
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedTheme = (localStorage.getItem('flow_theme') as 'light' | 'dark') || 'dark';
-      setTheme(savedTheme);
-    }
-  }, [setTheme]);
+    if (typeof window === 'undefined') return;
+    const savedTheme = (localStorage.getItem('flow_theme') as 'light' | 'dark' | 'system') || 'dark';
+    applyTheme(savedTheme);
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleSystemChange = () => {
+      const current = (localStorage.getItem('flow_theme') as 'light' | 'dark' | 'system') || 'dark';
+      if (current === 'system') {
+        applyTheme('system');
+      }
+    };
+
+    mediaQuery.addEventListener('change', handleSystemChange);
+    return () => mediaQuery.removeEventListener('change', handleSystemChange);
+  }, [applyTheme]);
 
   // Load tenant entities whenever currentOrg changes
   const loadTenantData = useCallback((org: Organization) => {
@@ -768,7 +800,12 @@ export function FlowProvider({ children }: { children: ReactNode }) {
         switchOrganization,
         createOrganization,
         theme,
+        resolvedTheme,
         setTheme,
+        isMobileMenuOpen,
+        setIsMobileMenuOpen,
+        isSidebarCollapsed,
+        setIsSidebarCollapsed,
         isSearchOpen,
         setIsSearchOpen,
         isCreateOpen,

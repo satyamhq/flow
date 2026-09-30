@@ -24,23 +24,23 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-medium transition-all select-none rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A73E8] focus-visible:ring-offset-1 focus-visible:ring-offset-[#0B0E14] disabled:opacity-40 disabled:pointer-events-none cursor-pointer';
+      'inline-flex items-center justify-center font-medium transition-all select-none rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A73E8] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--bg-app)] disabled:opacity-40 disabled:pointer-events-none cursor-pointer';
 
     const variants = {
       primary:
         'bg-[#1A73E8] hover:bg-[#185ABC] active:bg-[#174EA6] text-white shadow-sm font-semibold border border-transparent',
       secondary:
-        'bg-[#161D2D] hover:bg-[#1C2438] active:bg-[#202A40] text-[#EDF2F7] border border-[#202637] shadow-sm',
+        'bg-[var(--surface-elevated)] hover:bg-[var(--surface-subtle)] active:bg-[var(--surface-base)] text-[var(--text-primary)] border border-[var(--border)] shadow-sm',
       tertiary:
-        'bg-transparent hover:bg-[#161D2D] text-[#9AA0A6] hover:text-[#EDF2F7] border border-transparent',
+        'bg-transparent hover:bg-[var(--surface-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-transparent',
       danger:
         'bg-[#D93025] hover:bg-[#B31412] active:bg-[#8C0000] text-white shadow-sm font-semibold border border-transparent',
       ghost:
-        'bg-transparent hover:bg-[#161D2D] text-[#9AA0A6] hover:text-[#EDF2F7]',
+        'bg-transparent hover:bg-[var(--surface-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]',
       icon:
-        'p-1.5 bg-transparent hover:bg-[#161D2D] text-[#9AA0A6] hover:text-[#EDF2F7] rounded',
+        'p-1.5 bg-transparent hover:bg-[var(--surface-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded',
       link:
-        'bg-transparent text-[#8AB4F8] hover:underline p-0 h-auto font-normal',
+        'bg-transparent text-[#1A73E8] hover:underline p-0 h-auto font-normal',
     };
 
     const sizes = {

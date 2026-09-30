@@ -49,7 +49,7 @@ export default function StrategyPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm font-medium text-[#EDF2F7] leading-relaxed">
+            <p className="text-sm font-medium text-[var(--text-primary)] leading-relaxed">
               {currentOrg.description || `${currentOrg.name} operates with autonomous clarity across product, engineering, and customer operations.`}
             </p>
           </CardContent>
@@ -64,12 +64,12 @@ export default function StrategyPage() {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-[#9AA0A6]">Industry:</span>
-              <span className="font-semibold text-[#EDF2F7]">{currentOrg.industry}</span>
+              <span className="text-[var(--text-secondary)]">Industry:</span>
+              <span className="font-semibold text-[var(--text-primary)]">{currentOrg.industry}</span>
             </div>
             <div className="flex items-center justify-between text-xs">
-              <span className="text-[#9AA0A6]">Operating Tier:</span>
-              <span className="font-semibold text-[#EDF2F7] uppercase">{currentOrg.plan}</span>
+              <span className="text-[var(--text-secondary)]">Operating Tier:</span>
+              <span className="font-semibold text-[var(--text-primary)] uppercase">{currentOrg.plan}</span>
             </div>
           </CardContent>
         </Card>
@@ -78,7 +78,7 @@ export default function StrategyPage() {
       {/* Active Strategic Objectives */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-xs font-semibold text-[#EDF2F7] uppercase tracking-wider">
+          <h3 className="text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wider">
             Active Strategic Objectives ({goals.length})
           </h3>
           <Link href={`/app/org/${currentOrg.slug}/okrs`} className="text-xs text-[#8AB4F8] hover:underline">
@@ -102,13 +102,13 @@ export default function StrategyPage() {
             {goals.map((g) => (
               <Card key={g.id} className="space-y-2 p-4">
                 <div className="flex justify-between items-start">
-                  <h4 className="text-xs font-semibold text-[#EDF2F7]">{g.title}</h4>
+                  <h4 className="text-xs font-semibold text-[var(--text-primary)]">{g.title}</h4>
                   <Badge variant={g.status === 'on_track' ? 'success' : 'warning'}>
                     {g.status.replace('_', ' ')}
                   </Badge>
                 </div>
-                <p className="text-[11px] text-[#9AA0A6]">{g.description || 'Strategic objective.'}</p>
-                <div className="pt-2 flex justify-between items-center text-[10px] text-[#9AA0A6] border-t border-[#202637]">
+                <p className="text-[11px] text-[var(--text-secondary)]">{g.description || 'Strategic objective.'}</p>
+                <div className="pt-2 flex justify-between items-center text-[10px] text-[var(--text-secondary)] border-t border-[var(--border)]">
                   <span>Progress: {g.progress}%</span>
                   <span className="font-mono">Target: {g.targetDate || '2026'}</span>
                 </div>

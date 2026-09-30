@@ -100,7 +100,7 @@ export function CommandPalette() {
     },
   }));
 
-  const taskItems = tasks.map((t) => ({
+  const taskItems = tasks.slice(0, 10).map((t) => ({
     id: `task-${t.id}`,
     category: 'Tasks',
     title: t.title,
@@ -111,10 +111,10 @@ export function CommandPalette() {
     },
   }));
 
-  const customerItems = customers.map((c) => ({
+  const customerItems = customers.slice(0, 10).map((c) => ({
     id: `cust-${c.id}`,
     category: 'Customers',
-    title: `${c.name} (${c.tier})`,
+    title: c.name,
     icon: Users,
     action: () => {
       setIsSearchOpen(false);
@@ -122,15 +122,15 @@ export function CommandPalette() {
     },
   }));
 
-  const orgItems = organizations.map((o) => ({
-    id: `org-${o.id}`,
+  const orgItems = organizations.map((org) => ({
+    id: `org-${org.id}`,
     category: 'Switch Organization',
-    title: `Switch to ${o.name}`,
+    title: org.name,
     icon: Building,
     action: () => {
-      switchOrganization(o.slug);
       setIsSearchOpen(false);
-      router.push(`/app/org/${o.slug}/overview`);
+      switchOrganization(org.slug);
+      router.push(`/app/org/${org.slug}/overview`);
     },
   }));
 
@@ -138,11 +138,11 @@ export function CommandPalette() {
 
   const filteredItems = query
     ? allItems.filter(
-        (item) =>
-          item.title.toLowerCase().includes(query.toLowerCase()) ||
-          item.category.toLowerCase().includes(query.toLowerCase())
+        (i) =>
+          i.title.toLowerCase().includes(query.toLowerCase()) ||
+          i.category.toLowerCase().includes(query.toLowerCase())
       )
-    : allItems.slice(0, 10);
+    : allItems;
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
@@ -162,17 +162,17 @@ export function CommandPalette() {
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center pt-20 px-4"
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center pt-20 px-4"
       onClick={() => setIsSearchOpen(false)}
     >
       <div
-        className="w-full max-w-2xl bg-[#111622] border border-[#202637] rounded-lg shadow-2xl overflow-hidden animate-in fade-in"
+        className="w-full max-w-2xl bg-[var(--surface-base)] border border-[var(--border)] rounded-lg shadow-2xl overflow-hidden animate-in fade-in"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={handleKeyDown}
       >
         {/* Search Input */}
-        <div className="flex items-center px-4 py-3 border-b border-[#202637] bg-[#0E131F]">
-          <Search className="w-4 h-4 text-[#9AA0A6] mr-3" />
+        <div className="flex items-center px-4 py-3 border-b border-[var(--border)] bg-[var(--surface-header)]">
+          <Search className="w-4 h-4 text-[var(--text-secondary)] mr-3 flex-shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -182,9 +182,9 @@ export function CommandPalette() {
               setSelectedIndex(0);
             }}
             placeholder="Type a command or search across all resources... (esc to close)"
-            className="w-full bg-transparent text-[#EDF2F7] placeholder-[#5F6368] text-xs focus:outline-none"
+            className="w-full bg-transparent text-[var(--text-primary)] placeholder-[var(--text-muted)] text-xs focus:outline-none"
           />
-          <kbd className="text-[10px] font-mono text-[#9AA0A6] bg-[#161D2D] px-1.5 py-0.5 rounded border border-[#202637]">
+          <kbd className="text-[10px] font-mono text-[var(--text-secondary)] bg-[var(--surface-elevated)] px-1.5 py-0.5 rounded border border-[var(--border)]">
             ESC
           </kbd>
         </div>
@@ -192,7 +192,7 @@ export function CommandPalette() {
         {/* Results List */}
         <div className="max-h-96 overflow-y-auto p-2 space-y-0.5 custom-scrollbar">
           {filteredItems.length === 0 ? (
-            <div className="p-8 text-center text-[#5F6368] text-xs">
+            <div className="p-8 text-center text-[var(--text-secondary)] text-xs">
               No matching resources found for &ldquo;{query}&rdquo;.
             </div>
           ) : (
@@ -205,16 +205,20 @@ export function CommandPalette() {
                   onClick={item.action}
                   onMouseEnter={() => setSelectedIndex(index)}
                   className={`w-full flex items-center justify-between px-3 py-2 rounded text-xs transition-colors cursor-pointer ${
-                    isSelected ? 'bg-[rgba(26,115,232,0.14)] text-white border border-[rgba(26,115,232,0.3)]' : 'text-[#EDF2F7] hover:bg-[#161D2D]'
+                    isSelected
+                      ? 'bg-[var(--primary-subtle)] text-[#1A73E8] border border-[rgba(26,115,232,0.3)] font-semibold'
+                      : 'text-[var(--text-primary)] hover:bg-[var(--surface-elevated)] border border-transparent'
                   }`}
                 >
                   <div className="flex items-center space-x-2.5">
-                    <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-[#8AB4F8]' : 'text-[#9AA0A6]'}`} />
+                    <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-[#1A73E8]' : 'text-[var(--text-secondary)]'}`} />
                     <span className="font-medium">{item.title}</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="text-[10px] text-[#9AA0A6] uppercase tracking-wider font-mono">{item.category}</span>
-                    <ArrowRight className={`w-3 h-3 ${isSelected ? 'text-[#8AB4F8]' : 'text-transparent'}`} />
+                    <span className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider font-mono">
+                      {item.category}
+                    </span>
+                    <ArrowRight className={`w-3 h-3 ${isSelected ? 'text-[#1A73E8]' : 'text-transparent'}`} />
                   </div>
                 </button>
               );
@@ -223,16 +227,16 @@ export function CommandPalette() {
         </div>
 
         {/* Footer shortcuts */}
-        <div className="px-4 py-2 border-t border-[#181E2E] bg-[#0B0E14] flex items-center justify-between text-[11px] text-[#9AA0A6]">
+        <div className="px-4 py-2 border-t border-[var(--border-subtle)] bg-[var(--surface-header)] flex items-center justify-between text-[11px] text-[var(--text-secondary)]">
           <div className="flex items-center space-x-3">
             <span>
-              Navigate <kbd className="font-mono bg-[#161D2D] px-1 py-0.5 rounded text-[10px]">↑↓</kbd>
+              Navigate <kbd className="font-mono bg-[var(--surface-elevated)] px-1 py-0.5 rounded text-[10px]">↑↓</kbd>
             </span>
             <span>
-              Select <kbd className="font-mono bg-[#161D2D] px-1 py-0.5 rounded text-[10px]">↵</kbd>
+              Select <kbd className="font-mono bg-[var(--surface-elevated)] px-1 py-0.5 rounded text-[10px]">↵</kbd>
             </span>
             <span>
-              Close <kbd className="font-mono bg-[#161D2D] px-1 py-0.5 rounded text-[10px]">esc</kbd>
+              Close <kbd className="font-mono bg-[var(--surface-elevated)] px-1 py-0.5 rounded text-[10px]">esc</kbd>
             </span>
           </div>
           <span className="font-mono text-[10px]">Flow Universal Search</span>

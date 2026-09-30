@@ -16,21 +16,21 @@ export function Badge({
   ...props
 }: BadgeProps) {
   const variants = {
-    success: 'bg-[rgba(13,144,79,0.16)] text-[#34A853] border-[rgba(13,144,79,0.3)]',
-    warning: 'bg-[rgba(227,116,0,0.16)] text-[#FBBC04] border-[rgba(227,116,0,0.3)]',
-    error: 'bg-[rgba(217,48,37,0.16)] text-[#EA4335] border-[rgba(217,48,37,0.3)]',
-    info: 'bg-[rgba(26,115,232,0.16)] text-[#8AB4F8] border-[rgba(26,115,232,0.3)]',
-    neutral: 'bg-[#181E2E] text-[#9AA0A6] border-[#252D40]',
-    outline: 'bg-transparent text-[#EDF2F7] border-[#303B54]',
+    success: 'bg-[var(--success-subtle)] text-[var(--success-text)] border-[rgba(13,144,79,0.3)]',
+    warning: 'bg-[var(--warning-subtle)] text-[var(--warning-text)] border-[rgba(227,116,0,0.3)]',
+    error: 'bg-[var(--error-subtle)] text-[var(--error-text)] border-[rgba(217,48,37,0.3)]',
+    info: 'bg-[var(--info-subtle)] text-[#1A73E8] border-[rgba(26,115,232,0.3)]',
+    neutral: 'bg-[var(--surface-elevated)] text-[var(--text-secondary)] border-[var(--border)]',
+    outline: 'bg-transparent text-[var(--text-primary)] border-[var(--border)]',
   };
 
   const dotColors = {
-    success: 'bg-[#34A853]',
-    warning: 'bg-[#FBBC04]',
-    error: 'bg-[#EA4335]',
-    info: 'bg-[#8AB4F8]',
-    neutral: 'bg-[#9AA0A6]',
-    outline: 'bg-[#EDF2F7]',
+    success: 'bg-[var(--success-text)]',
+    warning: 'bg-[var(--warning-text)]',
+    error: 'bg-[var(--error-text)]',
+    info: 'bg-[#1A73E8]',
+    neutral: 'bg-[var(--text-secondary)]',
+    outline: 'bg-[var(--text-primary)]',
   };
 
   return (

@@ -93,15 +93,15 @@ export default function ReportsPage() {
       ) : (
         <Card>
           <CardContent className="p-0">
-            <div className="divide-y divide-[#202637]">
+            <div className="divide-y divide-[var(--border)]">
               {reports.map((r) => (
                 <div
                   key={r.id}
-                  className="p-4 flex items-center justify-between text-xs hover:bg-[#161D2D]/40 transition-colors"
+                  className="p-4 flex items-center justify-between text-xs hover:bg-[var(--surface-elevated)]/40 transition-colors"
                 >
                   <div>
-                    <span className="font-semibold text-[#EDF2F7] block">{r.title}</span>
-                    <span className="block text-[11px] text-[#9AA0A6] mt-0.5 font-mono">
+                    <span className="font-semibold text-[var(--text-primary)] block">{r.title}</span>
+                    <span className="block text-[11px] text-[var(--text-secondary)] mt-0.5 font-mono">
                       {r.period} • {r.format}
                     </span>
                   </div>

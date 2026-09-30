@@ -75,8 +75,8 @@ export default function MarketingPage() {
       sortable: true,
       cell: (c) => (
         <div>
-          <span className="font-semibold text-[#EDF2F7]">{c.name}</span>
-          <span className="block text-[11px] text-[#9AA0A6]">{c.channel}</span>
+          <span className="font-semibold text-[var(--text-primary)]">{c.name}</span>
+          <span className="block text-[11px] text-[var(--text-secondary)]">{c.channel}</span>
         </div>
       ),
     },
@@ -84,8 +84,8 @@ export default function MarketingPage() {
       header: 'Spend / Budget',
       cell: (c) => (
         <div className="font-mono text-xs">
-          <span className="font-semibold text-[#EDF2F7]">{formatCurrency(c.spend)}</span>
-          <span className="text-[#9AA0A6] text-[11px]"> / {formatCurrency(c.budget)}</span>
+          <span className="font-semibold text-[var(--text-primary)]">{formatCurrency(c.spend)}</span>
+          <span className="text-[var(--text-secondary)] text-[11px]"> / {formatCurrency(c.budget)}</span>
         </div>
       ),
     },
@@ -93,14 +93,14 @@ export default function MarketingPage() {
       header: 'Leads Generated',
       accessorKey: 'leads',
       sortable: true,
-      cell: (c) => <span className="font-mono font-medium text-xs text-[#EDF2F7]">{c.leads}</span>,
+      cell: (c) => <span className="font-mono font-medium text-xs text-[var(--text-primary)]">{c.leads}</span>,
     },
     {
       header: 'Customer Acquisition Cost',
       accessorKey: 'cac',
       sortable: true,
       cell: (c) => (
-        <span className="font-mono text-xs text-[#EDF2F7]">
+        <span className="font-mono text-xs text-[var(--text-primary)]">
           {c.cac > 0 ? `$${c.cac}` : '—'}
         </span>
       ),
@@ -118,7 +118,7 @@ export default function MarketingPage() {
   ];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6">
       <PageHeader
         breadcrumbs={[
           { label: currentOrg.name, href: `/app/org/${currentOrg.slug}/overview` },
@@ -140,38 +140,38 @@ export default function MarketingPage() {
       />
 
       {isModalOpen && (
-        <div className="p-4 rounded-lg bg-[#111622] border border-[#202637] space-y-3 max-w-lg">
-          <h3 className="text-xs font-semibold text-[#EDF2F7]">Launch New Acquisition Campaign</h3>
+        <div className="p-4 rounded-lg bg-[var(--surface-base)] border border-[var(--border)] space-y-3 max-w-lg">
+          <h3 className="text-xs font-semibold text-[var(--text-primary)]">Launch New Acquisition Campaign</h3>
           <form onSubmit={handleCreateCampaign} className="space-y-3">
             <div>
-              <label className="text-[11px] text-[#9AA0A6] block mb-1">Campaign Name</label>
+              <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Campaign Name</label>
               <input
                 type="text"
                 required
                 value={formName}
                 onChange={(e) => setFormName(e.target.value)}
                 placeholder="e.g. Q4 Developer Outbound"
-                className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[11px] text-[#9AA0A6] block mb-1">Channel</label>
+                <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Channel</label>
                 <input
                   type="text"
                   value={formChannel}
                   onChange={(e) => setFormChannel(e.target.value)}
                   placeholder="e.g. Google Search"
-                  className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                  className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
                 />
               </div>
               <div>
-                <label className="text-[11px] text-[#9AA0A6] block mb-1">Budget ($)</label>
+                <label className="text-[11px] text-[var(--text-secondary)] block mb-1">Budget ($)</label>
                 <input
                   type="number"
                   value={formBudget}
                   onChange={(e) => setFormBudget(Number(e.target.value))}
-                  className="w-full text-xs px-3 py-1.5 bg-[#0B0E14] border border-[#202637] rounded text-[#EDF2F7] focus:outline-none focus:border-[#1A73E8]"
+                  className="w-full text-xs px-3 py-1.5 bg-[var(--bg-app)] border border-[var(--border)] rounded text-[var(--text-primary)] focus:outline-none focus:border-[#1A73E8]"
                 />
               </div>
             </div>

@@ -43,15 +43,15 @@ export default function CalendarPage() {
             <CalendarIcon className="w-4 h-4 text-[#8AB4F8]" />
             <span>Upcoming Deadlines & Releases</span>
           </CardTitle>
-          <span className="text-xs text-[#9AA0A6] font-mono">{tasks.length} items scheduled</span>
+          <span className="text-xs text-[var(--text-secondary)] font-mono">{tasks.length} items scheduled</span>
         </CardHeader>
         <CardContent>
-          <div className="divide-y divide-[#202637]">
+          <div className="divide-y divide-[var(--border)]">
             {tasks.map((t) => (
-              <div key={t.id} className="py-3.5 first:pt-0 last:pb-0 flex items-center justify-between text-xs hover:bg-[#161D2D]/40 px-2 rounded transition-colors">
+              <div key={t.id} className="py-3.5 first:pt-0 last:pb-0 flex items-center justify-between text-xs hover:bg-[var(--surface-elevated)]/40 px-2 rounded transition-colors">
                 <div>
-                  <span className="font-medium text-[#EDF2F7]">{t.title}</span>
-                  <span className="block text-[11px] text-[#9AA0A6]">{t.projectName}</span>
+                  <span className="font-medium text-[var(--text-primary)]">{t.title}</span>
+                  <span className="block text-[11px] text-[var(--text-secondary)]">{t.projectName}</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Badge variant={t.priority === 'urgent' ? 'error' : t.priority === 'high' ? 'warning' : 'neutral'}>
