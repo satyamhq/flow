@@ -1,7 +1,10 @@
 $routes = @(
   '/',
   '/login',
+  '/signup',
   '/onboarding',
+  '/robots.txt',
+  '/sitemap.xml',
   '/app/org/acme/overview',
   '/app/org/acme/my-work',
   '/app/org/acme/inbox',
