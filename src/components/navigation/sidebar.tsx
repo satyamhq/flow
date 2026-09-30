@@ -155,7 +155,7 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="w-56 h-[calc(100vh-3rem)] bg-[#0E131F] border-r border-[#202637] flex flex-col justify-between overflow-y-auto select-none text-[#EDF2F7] text-xs custom-scrollbar">
+    <aside className="w-56 h-[calc(100vh-3rem)] bg-[var(--surface-header)] border-r border-[var(--border)] flex flex-col justify-between overflow-y-auto select-none text-[var(--text-primary)] text-xs custom-scrollbar transition-colors">
       <div className="py-2.5 px-2 space-y-3">
         {navSections.map((section) => {
           const isCollapsed = collapsedSections[section.title];
@@ -163,13 +163,13 @@ export function Sidebar() {
             <div key={section.title} className="space-y-0.5">
               <button
                 onClick={() => toggleSection(section.title)}
-                className="w-full flex items-center justify-between px-2 py-1 text-[10px] font-semibold text-[#9AA0A6] hover:text-[#EDF2F7] tracking-wider uppercase transition-colors cursor-pointer"
+                className="w-full flex items-center justify-between px-2 py-1 text-[10px] font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] tracking-wider uppercase transition-colors cursor-pointer"
               >
                 <span>{section.title}</span>
                 {isCollapsed ? (
-                  <ChevronRight className="w-3 h-3 text-[#5F6368]" />
+                  <ChevronRight className="w-3 h-3 text-[var(--text-muted)]" />
                 ) : (
-                  <ChevronDown className="w-3 h-3 text-[#5F6368]" />
+                  <ChevronDown className="w-3 h-3 text-[var(--text-muted)]" />
                 )}
               </button>
 
@@ -185,20 +185,20 @@ export function Sidebar() {
                         href={item.href}
                         className={`flex items-center justify-between px-2.5 py-1.5 rounded font-medium transition-all ${
                           isActive
-                            ? 'bg-[rgba(26,115,232,0.12)] text-[#8AB4F8] border border-[rgba(26,115,232,0.3)] font-semibold'
-                            : 'text-[#9AA0A6] hover:text-[#EDF2F7] hover:bg-[#161D2D]'
+                            ? 'bg-[rgba(26,115,232,0.12)] text-[#1A73E8] border border-[rgba(26,115,232,0.3)] font-semibold'
+                            : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-elevated)]'
                         }`}
                       >
                         <div className="flex items-center space-x-2.5 truncate">
-                          <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#8AB4F8]' : 'text-[#9AA0A6]'}`} />
+                          <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#1A73E8]' : 'text-[var(--text-secondary)]'}`} />
                           <span className="truncate">{item.name}</span>
                         </div>
                         {item.badge && (
                           <span
-                            className={`text-[9px] px-1.5 py-0.2 rounded-full font-mono ${
+                            className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono ${
                               item.badge === 'Agent'
-                                ? 'bg-[rgba(26,115,232,0.2)] text-[#8AB4F8] border border-[rgba(26,115,232,0.35)]'
-                                : 'bg-[#181E2E] text-[#9AA0A6] border border-[#252D40]'
+                                ? 'bg-[rgba(26,115,232,0.2)] text-[#1A73E8] border border-[rgba(26,115,232,0.35)]'
+                                : 'bg-[var(--surface-elevated)] text-[var(--text-secondary)] border border-[var(--border)]'
                             }`}
                           >
                             {item.badge}
@@ -215,12 +215,12 @@ export function Sidebar() {
       </div>
 
       {/* Footer System Telemetry */}
-      <div className="p-3 border-t border-[#202637] bg-[#0B0E14] text-[11px] text-[#9AA0A6] flex items-center justify-between font-mono">
+      <div className="p-3 border-t border-[var(--border)] bg-[var(--surface-header)] text-[11px] text-[var(--text-secondary)] flex items-center justify-between font-mono">
         <div className="flex items-center space-x-1.5">
           <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse" />
           <span className="text-[10px]">US-East (185ms)</span>
         </div>
-        <span className="text-[10px] text-[#5F6368]">Flow v2.4</span>
+        <span className="text-[10px] text-[var(--text-muted)]">Flow v2.4</span>
       </div>
     </aside>
   );

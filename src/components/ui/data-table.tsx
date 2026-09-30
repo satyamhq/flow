@@ -131,7 +131,7 @@ export function DataTable<T>({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={searchPlaceholder}
-                className="w-full bg-[#111622] border border-[#202637] rounded-md pl-9 pr-3 py-1.5 text-xs text-[#EDF2F7] placeholder-[#5F6368] focus:outline-none focus:border-[#1A73E8]"
+                className="w-full bg-[var(--surface-base)] border border-[var(--border)] rounded-md pl-9 pr-3 py-1.5 text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#1A73E8]"
               />
             </div>
           )}
@@ -142,9 +142,9 @@ export function DataTable<T>({
 
       {/* Bulk Actions Banner */}
       {selectable && selectedIds.length > 0 && bulkActions && (
-        <div className="flex items-center justify-between px-4 py-2 bg-[rgba(26,115,232,0.12)] border border-[rgba(26,115,232,0.3)] rounded-md text-xs text-[#EDF2F7] animate-in fade-in">
+        <div className="flex items-center justify-between px-4 py-2 bg-[rgba(26,115,232,0.12)] border border-[rgba(26,115,232,0.3)] rounded-md text-xs text-[var(--text-primary)] animate-in fade-in">
           <span className="font-medium text-xs">
-            <span className="text-[#8AB4F8] font-bold">{selectedIds.length}</span> selected
+            <span className="text-[#1A73E8] font-bold">{selectedIds.length}</span> selected
           </span>
           <div className="flex items-center gap-2">
             {bulkActions(selectedIds, () => setSelectedIds([]))}
@@ -153,10 +153,10 @@ export function DataTable<T>({
       )}
 
       {/* The Table */}
-      <div className="bg-[#111622] border border-[#202637] rounded-lg overflow-hidden shadow-sm">
+      <div className="bg-[var(--surface-base)] border border-[var(--border)] rounded-lg overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-[#9AA0A6] border-collapse">
-            <thead className="bg-[#0E131F] text-[#9AA0A6] font-medium border-b border-[#202637]">
+          <table className="w-full text-left text-xs text-[var(--text-secondary)] border-collapse">
+            <thead className="bg-[var(--surface-header)] text-[var(--text-secondary)] font-medium border-b border-[var(--border)]">
               <tr>
                 {selectable && (
                   <th className="py-2.5 px-3 w-8">
@@ -166,7 +166,7 @@ export function DataTable<T>({
                         filteredData.length > 0 && selectedIds.length === filteredData.length
                       }
                       onChange={toggleSelectAll}
-                      className="rounded bg-[#161D2D] border-[#202637] text-[#1A73E8] focus:ring-0 cursor-pointer"
+                      className="rounded bg-[var(--surface-elevated)] border-[var(--border)] text-[#1A73E8] focus:ring-0 cursor-pointer"
                     />
                   </th>
                 )}
@@ -174,8 +174,8 @@ export function DataTable<T>({
                   <th
                     key={idx}
                     className={cn(
-                      'py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wider text-[#9AA0A6]',
-                      col.sortable && 'cursor-pointer hover:text-[#EDF2F7] select-none',
+                      'py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wider text-[var(--text-secondary)]',
+                      col.sortable && 'cursor-pointer hover:text-[var(--text-primary)] select-none',
                       col.className
                     )}
                     onClick={() => col.sortable && handleSort(col.accessorKey)}
@@ -191,7 +191,7 @@ export function DataTable<T>({
                               <ChevronDown className="w-3 h-3 text-[#1A73E8]" />
                             )
                           ) : (
-                            <ArrowUpDown className="w-3 h-3 text-[#5F6368] opacity-60" />
+                            <ArrowUpDown className="w-3 h-3 text-[var(--text-muted)] opacity-60" />
                           )}
                         </span>
                       )}
@@ -201,7 +201,7 @@ export function DataTable<T>({
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-[#181E2E]">
+            <tbody className="divide-y divide-[var(--border-subtle)]">
               {isLoading ? (
                 <tr>
                   <td

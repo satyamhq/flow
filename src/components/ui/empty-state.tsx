@@ -46,13 +46,13 @@ export function EmptyState({
         className
       )}
     >
-      <div className="w-10 h-10 rounded-full bg-[#161D2D] border border-[#202637] flex items-center justify-center text-[#8AB4F8] shadow-inner">
+      <div className="w-10 h-10 rounded-full bg-[var(--surface-elevated)] border border-[var(--border)] flex items-center justify-center text-[#1A73E8] shadow-inner">
         {renderIcon()}
       </div>
 
       <div className="space-y-1">
-        <h4 className="text-xs font-semibold text-[#EDF2F7]">{title}</h4>
-        <p className="text-[11px] text-[#9AA0A6] leading-relaxed">{description}</p>
+        <h4 className="text-xs font-semibold text-[var(--text-primary)]">{title}</h4>
+        <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">{description}</p>
       </div>
 
       {finalActionLabel && finalOnAction && (

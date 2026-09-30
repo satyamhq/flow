@@ -30,10 +30,10 @@ export function PageHeader({
   className,
 }: PageHeaderProps) {
   return (
-    <div className={cn('space-y-4 border-b border-[#202637] pb-4 mb-6', className)}>
+    <div className={cn('space-y-4 border-b border-[var(--border)] pb-4 mb-6', className)}>
       {/* Breadcrumbs */}
       {breadcrumbs && breadcrumbs.length > 0 && (
-        <nav className="flex items-center space-x-1.5 text-xs text-[#9AA0A6]">
+        <nav className="flex items-center space-x-1.5 text-xs text-[var(--text-secondary)]">
           {breadcrumbs.map((crumb, idx) => {
             const isLast = idx === breadcrumbs.length - 1;
             return (
@@ -41,16 +41,16 @@ export function PageHeader({
                 {crumb.href && !isLast ? (
                   <Link
                     href={crumb.href}
-                    className="hover:text-[#EDF2F7] transition-colors"
+                    className="hover:text-[var(--text-primary)] transition-colors"
                   >
                     {crumb.label}
                   </Link>
                 ) : (
-                  <span className={isLast ? 'text-[#EDF2F7] font-medium' : ''}>
+                  <span className={isLast ? 'text-[var(--text-primary)] font-medium' : ''}>
                     {crumb.label}
                   </span>
                 )}
-                {!isLast && <ChevronRight className="w-3 h-3 text-[#5F6368]" />}
+                {!isLast && <ChevronRight className="w-3 h-3 text-[var(--text-muted)]" />}
               </React.Fragment>
             );
           })}
@@ -61,11 +61,11 @@ export function PageHeader({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl font-bold tracking-tight text-[#EDF2F7]">{title}</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">{title}</h1>
             {badge && <div>{badge}</div>}
           </div>
           {description && (
-            <p className="text-xs text-[#9AA0A6] leading-relaxed max-w-3xl">
+            <p className="text-xs text-[var(--text-secondary)] leading-relaxed max-w-3xl">
               {description}
             </p>
           )}

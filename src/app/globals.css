@@ -53,10 +53,23 @@
   /* Shadows (Restrained enterprise depth) */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
   --shadow-md: 0 4px 12px 0 rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 12px 32px 0 rgba(0, 0, 0, 0.65);
+  /* Aliases for universal component compatibility */
+  --color-bg: var(--bg-app);
+  --color-surface: var(--surface-base);
+  --color-surface-hover: var(--surface-elevated);
+  --color-border: var(--border);
+  --color-text: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
 }
 
 .light, [data-theme="light"] {
+  /* Aliases for universal component compatibility */
+  --color-bg: #F8F9FA;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F1F3F4;
+  --color-border: #DADCE0;
+  --color-text: #202124;
+  --color-text-secondary: #5F6368;
   /* Google Cloud Console Light Theme Tokens */
   --bg-app: #F8F9FA;
   --surface-base: #FFFFFF;
